@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+
+public class Step
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
+
+    public Step(string name, string description = "")
+    {
+        Name = name;
+        Description = description;
+    }
+}
+
+public class Transition
+{
+    public decimal From { get; }
+    public decimal To { get; }
+    public Func<bool> Condition { get; }
+
+    public Transition(decimal from, decimal to, Func<bool> condition)
+    {
+        From = from;
+        To = to;
+        Condition = condition ?? throw new ArgumentNullException(nameof(condition));
+    }
+
+    public bool CanFire() => Condition();
+}
+
+public class Grafcet
+{
+    private readonly Dictionary<decimal, Step> _steps = new Dictionary<decimal, Step>();
+    private readonly List<decimal> _initialSteps = new List<decimal>();
+    private readonly List<Transition> _transitions = new List<Transition>();
+
+    public void AddStep(decimal number, Step step, bool initial = false)
+    {
+        if (_steps.ContainsKey(number))
+            throw new ArgumentException($"L'étape {number} existe déjà.");
+        _steps[number] = step;
+
+        if (initial)
+            _initialSteps.Add(number);
+    }
+
+    public void AddTransition(decimal from, decimal to, Func<bool> condition)
+    {
+        if (!_steps.ContainsKey(from) || !_steps.ContainsKey(to))
+            throw new ArgumentException("Les étapes source ou destination n'existent pas.");
+
+        _transitions.Add(new Transition(from, to, condition));
+    }
+
+    public IEnumerable<KeyValuePair<decimal, Step>> GetAllSteps() => _steps;
+    public IEnumerable<Transition> GetAllTransitions() => _transitions;
+}
