@@ -373,6 +373,13 @@
               "target": "G7_Description",
               "tags": []
             }
+          },
+          {
+            "Key": "template",
+            "Value": {
+              "target": "G7_Template_CS",
+              "tags": []
+            }
           }
         ],
         "Functions": [],
@@ -380,7 +387,7 @@
         "UserAction": "",
         "LoopMethod": "",
         "InitMethod": "",
-        "BuildMethod": "#construit le code générique des instances du grafcet\r\nimport ast\r\nimport clr\r\nclr.AddReference(\"System\")\r\nfrom System import Decimal\r\nfrom System.Globalization import CultureInfo\r\ncontenu = data.text()\r\n#\r\n# Initialisation des dictionnaires\r\n#\r\ncarte = {} # tableau des éléments par position X,Y\r\netapes = {} # liste des étapes et leurs descriptions\r\ntransitions = {} # liste des transitions et leurs descriptions\r\n# Traitement ligne par ligne\r\nfor ligne in contenu.strip().splitlines():\r\n    ligne = ligne.strip()\r\n    if ligne.startswith(\"Etape\"):\r\n        # Exemple: Etape 1 \"Initiale\"\r\n        parts = ligne.split(\" \", 2)\r\n        numero = Decimal.Parse(parts[1], CultureInfo.InvariantCulture)\r\n        label = parts[2].strip('\"')\r\n        etapes[numero] = label\r\n    elif ligne.startswith(\"Transition\"):\r\n        # Exemple: Transition 1>2 \"Choix1\"\r\n        parts = ligne.split(\" \", 2)\r\n        source_dest = parts[1].split(\">\")\r\n        source = Decimal.Parse(source_dest[0], CultureInfo.InvariantCulture)\r\n        destination = Decimal.Parse(source_dest[1], CultureInfo.InvariantCulture)\r\n        label = parts[2].strip('\"')\r\n        transitions[(source, destination)] = label\r\netapes = dict(sorted(etapes.items(), key=lambda item: item[0]))\r\ntransitions = dict(sorted(transitions.items(), key=lambda item: item[0][0]))\r\n# construit le code\r\nlignes = [\r\n   \"var g = new Grafcet();\"\r\n]\r\nlignes.append(\"\")\r\nfor num,label in etapes.items():\r\n  if num == 1:\r\n    lignes.append(f'g.AddStep({num}, new Step(\"{label}\"), true);')\r\n  else:\r\n    lignes.append(f'g.AddStep({num}, new Step(\"{label}\"));')\r\nlignes.append(\"\")\r\nfor key,label in transitions.items():\r\n  lignes.append(f'g.AddTransition({key[0]}, {key[1]}, () => true);')\r\nout.write(\"\\n\".join(lignes))\r\nprint(out.text())",
+        "BuildMethod": "#construit le code générique des instances du grafcet\r\nimport ast\r\nimport clr\r\nclr.AddReference(\"System\")\r\nfrom System import Decimal\r\nfrom System.Globalization import CultureInfo\r\nfrom Scriban import Template\r\ncontenu = data.text()\r\ntpl = template.text()\r\n#\r\n# Initialisation des dictionnaires\r\n#\r\ndata = { 'etapes' : [], 'transitions':[] }\r\ncarte = {} # tableau des éléments par position X,Y\r\netapes = {} # liste des étapes et leurs descriptions\r\ntransitions = {} # liste des transitions et leurs descriptions\r\n# Traitement ligne par ligne\r\nfor ligne in contenu.strip().splitlines():\r\n    ligne = ligne.strip()\r\n    if ligne.startswith(\"Etape\"):\r\n        # Exemple: Etape 1 \"Initiale\"\r\n        parts = ligne.split(\" \", 2)\r\n        numero = Decimal.Parse(parts[1], CultureInfo.InvariantCulture)\r\n        label = parts[2].strip('\"')\r\n        data['etapes'].append({ 'numero': numero, 'label': label })\r\n    elif ligne.startswith(\"Transition\"):\r\n        # Exemple: Transition 1>2 \"Choix1\"\r\n        parts = ligne.split(\" \", 2)\r\n        source_dest = parts[1].split(\">\")\r\n        source = Decimal.Parse(source_dest[0], CultureInfo.InvariantCulture)\r\n        destination = Decimal.Parse(source_dest[1], CultureInfo.InvariantCulture)\r\n        label = parts[2].strip('\"')\r\n        data['transitions'].append({ 'source': source, 'destination': destination, 'label': label })\r\nprint(data)\r\n# construit le code\r\nresult = Template.Parse(tpl).Render(data)\r\nprint(result)\r\nout.write(result)",
         "ObjectCode": "",
         "DrawCode": "import clr\r\nclr.AddReference('PresentationCore')\r\nclr.AddReference('WindowsBase')\r\nfrom System.Windows import Point, Rect, Size, FontStyles, FontWeights, FontStretches, TextTrimming\r\nfrom System.Windows.Media import Brushes, Typeface, FormattedText, Pen\r\nfrom System.Windows.Media import FontFamily\r\nfrom System.Windows import FlowDirection\r\nfrom System.Globalization import CultureInfo\r\ndef dessiner_rectangle_contenu(drawingContext):\r\n    # Dessiner le rectangle avec fond et contour\r\n    drawingContext.DrawRectangle(Brushes.LightGray, \r\n                                 Pen(Brushes.Black, 1), \r\n                                 rect)\r\n    # Définir les textes : titre et description\r\n    titre = \"Titre du rectangle\"\r\n    description = \"Ceci est une description\\nmultiligne du contenu.\"\r\n    # Définir la police et le style de texte\r\n    typeface = Typeface(FontFamily(\"Segoe UI\"), \r\n                        FontStyles.Normal,\r\n                        FontWeights.Bold, \r\n                        FontStretches.Normal)\r\n    # Texte du titre\r\n    formattedTitre = FormattedText(desc,\r\n                                   CultureInfo.CurrentCulture,\r\n                                   FlowDirection.LeftToRight,\r\n                                   typeface,\r\n                                   14,  # Taille du texte\r\n                                   Brushes.Black,\r\n                                   1.0)  # PixelsPerDip\r\n    # Texte de la description\r\n    typefaceDesc = Typeface(FontFamily(\"Segoe UI\"), \r\n                            FontStyles.Normal,\r\n                            FontWeights.Normal, \r\n                            FontStretches.Normal)\r\n    formattedDescription = FormattedText(out.text(),\r\n                                         CultureInfo.CurrentCulture,\r\n                                         FlowDirection.LeftToRight,\r\n                                         typefaceDesc,\r\n                                         12,\r\n                                         Brushes.Black,\r\n                                         1.0)\r\n    formattedDescription.MaxTextWidth = rect.Width - 20\r\n    # Positionner le texte dans le rectangle\r\n    drawingContext.DrawText(formattedTitre, Point(rect.X + 10, rect.Y + 10))\r\n    drawingContext.DrawText(formattedDescription, Point(rect.X + 10, rect.Y + 35))\r\ndessiner_rectangle_contenu(dc)"
       }
@@ -606,7 +613,7 @@
           {
             "Key": "G7_Template_CS",
             "Value": {
-              "zone": "222.835958478618,23.278826499939726,726.69291809542,984.7289281436728",
+              "zone": "239.00419445435767,88.96228515138154,722.6508591014851,1668.8474128671537",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -614,7 +621,7 @@
           {
             "Key": "G7_CodeGen_CS",
             "Value": {
-              "zone": "1153.4086293934965,22.697911512576354,567.3531233156871,999.556881037103",
+              "zone": "1254.1293271172117,-302.3378792658264,604.4762563708632,2454.0698737714542",
               "background": null,
               "TitlePos": "TopLeft"
             }

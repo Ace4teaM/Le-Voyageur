@@ -56,3 +56,45 @@ public class Grafcet
     public IEnumerable<KeyValuePair<decimal, Step>> GetAllSteps() => _steps;
     public IEnumerable<Transition> GetAllTransitions() => _transitions;
 }
+
+class Program
+{
+    static void Main()
+    {
+        var grafcet = new Grafcet();
+
+        // Définition des étapes
+        {{- for e in etapes }}
+        grafcet.AddStep({{ e.numero }}, new Step("{{ e.label }}"){{ if e.numero == 1 }}, initial: true{{ end }});
+        {{- end }}
+
+        // Variables simulées pour les conditions
+        bool chauffeOK = false;
+        bool productionTerminee = false;
+
+        // Définition des transitions
+        {{- for t in transitions }}
+        grafcet.AddTransition({{ t.source }}, {{ t.destination }}, () => true); // toujours vrai
+        {{- end }}
+
+        // Initialisation du Grafcet
+        grafcet.Initialize();
+        grafcet.PrintState();
+
+        Console.WriteLine("\n--- Cycle 1 ---");
+        grafcet.ExecuteCycle(); // transition 1 -> 2
+        grafcet.PrintState();
+
+        Console.WriteLine("\n--- Cycle 2 : Chauffage terminé ---");
+        chauffeOK = true;
+        grafcet.ExecuteCycle(); // transition 2 -> 3
+        grafcet.PrintState();
+
+        Console.WriteLine("\n--- Cycle 3 : Production terminée ---");
+        productionTerminee = true;
+        grafcet.ExecuteCycle(); // transition 3 -> 4
+        grafcet.PrintState();
+
+        Console.WriteLine("\nFin de la simulation du Grafcet");
+    }
+}
