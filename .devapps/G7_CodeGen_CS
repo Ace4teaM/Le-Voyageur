@@ -1,59 +1,150 @@
-var g = new Grafcet();
+using System;
+using System.Collections.Generic;
 
-g.AddStep(1, new Step("Introduction"), true);
-g.AddStep(2, new Step("Entrer en douce"));
-g.AddStep(2.1, new Step("Flash lumineux"));
-g.AddStep(2.2, new Step("Silence mortel"));
-g.AddStep(3, new Step("Négocier avec les contrebandiers"));
-g.AddStep(3.1, new Step("La livraison"));
-g.AddStep(3.2, new Step("Le vol"));
-g.AddStep(4, new Step("La poursuite continue..."));
-g.AddStep(4.1, new Step("L'Epreuve de l'Equilibre"));
-g.AddStep(4.11, new Step("Lenteur et équilibre"));
-g.AddStep(4.12, new Step("Vitesse et risque"));
-g.AddStep(4.2, new Step("Infiltration"));
-g.AddStep(4.21, new Step("Furtivité réussie"));
-g.AddStep(4.22, new Step("Le piratage tourne mal"));
-g.AddStep(5, new Step("Une carte révélée"));
-g.AddStep(5.1, new Step("Xeros Prime"));
-g.AddStep(5.11, new Step("Marchand d'antiquités"));
-g.AddStep(5.12, new Step("Tentative d'évasion"));
-g.AddStep(5.2, new Step("Rejoindre Nara"));
-g.AddStep(5.21, new Step("Tentative de synthèse"));
-g.AddStep(5.22, new Step("La dernière quête"));
-g.AddStep(6, new Step("Retour ou destinée nouvelle"));
-g.AddStep(6.1, new Step("FIN 1"));
-g.AddStep(6.2, new Step("FIN 2"));
+public class Step
+{
+    public string Name { get; set; }
+    public string Description { get; set; }
 
-g.AddTransition(3.1, 4, () => true);
-g.AddTransition(3.2, 4, () => true);
-g.AddTransition(1, 3, () => true);
-g.AddTransition(5.11, 6, () => true);
-g.AddTransition(5.12, 6, () => true);
-g.AddTransition(5.21, 6, () => true);
-g.AddTransition(5.22, 6, () => true);
-g.AddTransition(6, 6.1, () => true);
-g.AddTransition(2.1, 4, () => true);
-g.AddTransition(2.2, 4, () => true);
-g.AddTransition(6, 6.2, () => true);
-g.AddTransition(4.1, 4.12, () => true);
-g.AddTransition(4.2, 4.21, () => true);
-g.AddTransition(4.2, 4.22, () => true);
-g.AddTransition(4, 4.2, () => true);
-g.AddTransition(4, 4.1, () => true);
-g.AddTransition(4.1, 4.11, () => true);
-g.AddTransition(1, 2, () => true);
-g.AddTransition(2, 2.1, () => true);
-g.AddTransition(2, 2.2, () => true);
-g.AddTransition(3, 3.1, () => true);
-g.AddTransition(3, 3.2, () => true);
-g.AddTransition(5, 5.1, () => true);
-g.AddTransition(5, 5.2, () => true);
-g.AddTransition(5.1, 5.11, () => true);
-g.AddTransition(5.1, 5.12, () => true);
-g.AddTransition(5.2, 5.21, () => true);
-g.AddTransition(5.2, 5.22, () => true);
-g.AddTransition(4.11, 5, () => true);
-g.AddTransition(4.12, 5, () => true);
-g.AddTransition(4.21, 5, () => true);
-g.AddTransition(4.22, 5, () => true);
+    public Step(string name, string description = "")
+    {
+        Name = name;
+        Description = description;
+    }
+}
+
+public class Transition
+{
+    public decimal From { get; }
+    public decimal To { get; }
+    public Func<bool> Condition { get; }
+
+    public Transition(decimal from, decimal to, Func<bool> condition)
+    {
+        From = from;
+        To = to;
+        Condition = condition ?? throw new ArgumentNullException(nameof(condition));
+    }
+
+    public bool CanFire() => Condition();
+}
+
+public class Grafcet
+{
+    private readonly Dictionary<decimal, Step> _steps = new Dictionary<decimal, Step>();
+    private readonly List<decimal> _initialSteps = new List<decimal>();
+    private readonly List<Transition> _transitions = new List<Transition>();
+
+    public void AddStep(decimal number, Step step, bool initial = false)
+    {
+        if (_steps.ContainsKey(number))
+            throw new ArgumentException($"L'étape {number} existe déjà.");
+        _steps[number] = step;
+
+        if (initial)
+            _initialSteps.Add(number);
+    }
+
+    public void AddTransition(decimal from, decimal to, Func<bool> condition)
+    {
+        if (!_steps.ContainsKey(from) || !_steps.ContainsKey(to))
+            throw new ArgumentException("Les étapes source ou destination n'existent pas.");
+
+        _transitions.Add(new Transition(from, to, condition));
+    }
+
+    public IEnumerable<KeyValuePair<decimal, Step>> GetAllSteps() => _steps;
+    public IEnumerable<Transition> GetAllTransitions() => _transitions;
+}
+
+class Program
+{
+    static void Main()
+    {
+        var grafcet = new Grafcet();
+
+        // Définition des étapes
+        grafcet.AddStep(1, new Step("Introduction"), initial: true);
+        grafcet.AddStep(2, new Step("Entrer en douce"));
+        grafcet.AddStep(2.1, new Step("Flash lumineux"));
+        grafcet.AddStep(2.2, new Step("Silence mortel"));
+        grafcet.AddStep(3, new Step("Négocier avec les contrebandiers"));
+        grafcet.AddStep(3.1, new Step("La livraison"));
+        grafcet.AddStep(3.2, new Step("Le vol"));
+        grafcet.AddStep(4, new Step("La poursuite continue..."));
+        grafcet.AddStep(4.1, new Step("L'Epreuve de l'Equilibre"));
+        grafcet.AddStep(4.11, new Step("Lenteur et équilibre"));
+        grafcet.AddStep(4.12, new Step("Vitesse et risque"));
+        grafcet.AddStep(4.2, new Step("Infiltration"));
+        grafcet.AddStep(4.21, new Step("Furtivité réussie"));
+        grafcet.AddStep(4.22, new Step("Le piratage tourne mal"));
+        grafcet.AddStep(5, new Step("Une carte révélée"));
+        grafcet.AddStep(5.1, new Step("Xeros Prime"));
+        grafcet.AddStep(5.11, new Step("Marchand d'antiquités"));
+        grafcet.AddStep(5.12, new Step("Tentative d'évasion"));
+        grafcet.AddStep(5.2, new Step("Rejoindre Nara"));
+        grafcet.AddStep(5.21, new Step("Tentative de synthèse"));
+        grafcet.AddStep(5.22, new Step("La dernière quête"));
+        grafcet.AddStep(6, new Step("Retour ou destinée nouvelle"));
+        grafcet.AddStep(6.1, new Step("FIN 1"));
+        grafcet.AddStep(6.2, new Step("FIN 2"));
+
+        // Variables simulées pour les conditions
+        bool chauffeOK = false;
+        bool productionTerminee = false;
+
+        // Définition des transitions
+        grafcet.AddTransition(1, 2, () => true); // toujours vrai
+        grafcet.AddTransition(2, 2.1, () => true); // toujours vrai
+        grafcet.AddTransition(2, 2.2, () => true); // toujours vrai
+        grafcet.AddTransition(2.1, 4, () => true); // toujours vrai
+        grafcet.AddTransition(2.2, 4, () => true); // toujours vrai
+        grafcet.AddTransition(1, 3, () => true); // toujours vrai
+        grafcet.AddTransition(3, 3.1, () => true); // toujours vrai
+        grafcet.AddTransition(3, 3.2, () => true); // toujours vrai
+        grafcet.AddTransition(3.1, 4, () => true); // toujours vrai
+        grafcet.AddTransition(3.2, 4, () => true); // toujours vrai
+        grafcet.AddTransition(4, 4.1, () => true); // toujours vrai
+        grafcet.AddTransition(4.1, 4.11, () => true); // toujours vrai
+        grafcet.AddTransition(4.1, 4.12, () => true); // toujours vrai
+        grafcet.AddTransition(4.11, 5, () => true); // toujours vrai
+        grafcet.AddTransition(4.12, 5, () => true); // toujours vrai
+        grafcet.AddTransition(4, 4.2, () => true); // toujours vrai
+        grafcet.AddTransition(4.2, 4.21, () => true); // toujours vrai
+        grafcet.AddTransition(4.2, 4.22, () => true); // toujours vrai
+        grafcet.AddTransition(4.21, 5, () => true); // toujours vrai
+        grafcet.AddTransition(4.22, 5, () => true); // toujours vrai
+        grafcet.AddTransition(5, 5.1, () => true); // toujours vrai
+        grafcet.AddTransition(5.1, 5.11, () => true); // toujours vrai
+        grafcet.AddTransition(5.1, 5.12, () => true); // toujours vrai
+        grafcet.AddTransition(5.11, 6, () => true); // toujours vrai
+        grafcet.AddTransition(5.12, 6, () => true); // toujours vrai
+        grafcet.AddTransition(5, 5.2, () => true); // toujours vrai
+        grafcet.AddTransition(5.2, 5.21, () => true); // toujours vrai
+        grafcet.AddTransition(5.2, 5.22, () => true); // toujours vrai
+        grafcet.AddTransition(5.21, 6, () => true); // toujours vrai
+        grafcet.AddTransition(5.22, 6, () => true); // toujours vrai
+        grafcet.AddTransition(6, 6.1, () => true); // toujours vrai
+        grafcet.AddTransition(6, 6.2, () => true); // toujours vrai
+
+        // Initialisation du Grafcet
+        grafcet.Initialize();
+        grafcet.PrintState();
+
+        Console.WriteLine("\n--- Cycle 1 ---");
+        grafcet.ExecuteCycle(); // transition 1 -> 2
+        grafcet.PrintState();
+
+        Console.WriteLine("\n--- Cycle 2 : Chauffage terminé ---");
+        chauffeOK = true;
+        grafcet.ExecuteCycle(); // transition 2 -> 3
+        grafcet.PrintState();
+
+        Console.WriteLine("\n--- Cycle 3 : Production terminée ---");
+        productionTerminee = true;
+        grafcet.ExecuteCycle(); // transition 3 -> 4
+        grafcet.PrintState();
+
+        Console.WriteLine("\nFin de la simulation du Grafcet");
+    }
+}
