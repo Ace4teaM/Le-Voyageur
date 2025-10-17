@@ -391,6 +391,28 @@
         "ObjectCode": "",
         "DrawCode": "import clr\r\nclr.AddReference('PresentationCore')\r\nclr.AddReference('WindowsBase')\r\nfrom System.Windows import Point, Rect, Size, FontStyles, FontWeights, FontStretches, TextTrimming\r\nfrom System.Windows.Media import Brushes, Typeface, FormattedText, Pen\r\nfrom System.Windows.Media import FontFamily\r\nfrom System.Windows import FlowDirection\r\nfrom System.Globalization import CultureInfo\r\ndef dessiner_rectangle_contenu(drawingContext):\r\n    # Dessiner le rectangle avec fond et contour\r\n    drawingContext.DrawRectangle(Brushes.LightGray, \r\n                                 Pen(Brushes.Black, 1), \r\n                                 rect)\r\n    # Définir les textes : titre et description\r\n    titre = \"Titre du rectangle\"\r\n    description = \"Ceci est une description\\nmultiligne du contenu.\"\r\n    # Définir la police et le style de texte\r\n    typeface = Typeface(FontFamily(\"Segoe UI\"), \r\n                        FontStyles.Normal,\r\n                        FontWeights.Bold, \r\n                        FontStretches.Normal)\r\n    # Texte du titre\r\n    formattedTitre = FormattedText(desc,\r\n                                   CultureInfo.CurrentCulture,\r\n                                   FlowDirection.LeftToRight,\r\n                                   typeface,\r\n                                   14,  # Taille du texte\r\n                                   Brushes.Black,\r\n                                   1.0)  # PixelsPerDip\r\n    # Texte de la description\r\n    typefaceDesc = Typeface(FontFamily(\"Segoe UI\"), \r\n                            FontStyles.Normal,\r\n                            FontWeights.Normal, \r\n                            FontStretches.Normal)\r\n    formattedDescription = FormattedText(out.text(),\r\n                                         CultureInfo.CurrentCulture,\r\n                                         FlowDirection.LeftToRight,\r\n                                         typefaceDesc,\r\n                                         12,\r\n                                         Brushes.Black,\r\n                                         1.0)\r\n    formattedDescription.MaxTextWidth = rect.Width - 20\r\n    # Positionner le texte dans le rectangle\r\n    drawingContext.DrawText(formattedTitre, Point(rect.X + 10, rect.Y + 10))\r\n    drawingContext.DrawText(formattedDescription, Point(rect.X + 10, rect.Y + 35))\r\ndessiner_rectangle_contenu(dc)"
       }
+    },
+    {
+      "Key": "LayoutMain",
+      "Value": {
+        "BaseGuid": null,
+        "Guid": null,
+        "Tags": [
+          "#layout"
+        ],
+        "Description": "Vue Principale",
+        "InitialDataBase64": "",
+        "Editor": "text",
+        "Pointers": [],
+        "Functions": [],
+        "Properties": [],
+        "UserAction": "",
+        "LoopMethod": "",
+        "InitMethod": "",
+        "BuildMethod": "",
+        "ObjectCode": "",
+        "DrawCode": "import clr\r\nclr.AddReference('PresentationCore')\r\nclr.AddReference('PresentationFramework')\r\nclr.AddReference('WindowsBase')\r\nimport System\r\nfrom System.Windows import Point, FlowDirection, TextAlignment\r\nfrom System.Windows.Media import Typeface, Brushes, Pen, FormattedText\r\nfrom System.Windows.Media import GeometryGroup, RectangleGeometry, LineGeometry, StreamGeometry\r\nfrom System.Globalization import CultureInfo\r\nfrom System.Windows import Rect\r\n# Variables globales fournies :\r\n# drawingContext : DrawingContext WPF\r\n# canvasWidth, canvasHeight : dimensions de la surface à dessiner\r\n# Exemple de texte multi-lignes\r\ntext = out.text()\r\n# Parser en lignes et supprimer les espaces avant/après\r\ntemplate = [line.strip() for line in text.splitlines() if line.strip()]\r\nmax_len = max(len(zone) for zone in template)  # la plus longue zone (100%)\r\n# Couleurs pour chaque zone\r\ncurrent_color = 0\r\nzone_colors = [\r\n    \"#FFB0C4DE\",\r\n    \"#FFD8BFD8\",\r\n    \"#FFADD8E6\",\r\n    \"#FFB0E0E6\"\r\n]\r\n# Fonction pour extraire le nom et la largeur relative\r\ndef parse_zone(zone_text):\r\n    # exemple: \"[HEADER________________]\"\r\n    zone_name = zone_text.split(\"_\")[0].strip(\"[]\")\r\n    width_pct = len(zone_text) / max_len  # max caractères = 100%\r\n    return zone_name, width_pct\r\n# Dessin\r\ncanvasHeight = rect.Height\r\ncanvasWidth = rect.Width\r\ny_offset = 0\r\nline_height = canvasHeight / len(template)  # hauteur proportionnelle à la ligne\r\nfor line in template:\r\n    # Découper les zones dans la ligne\r\n    import re\r\n    zones = re.findall(r\"\\[[^\\]]+\\]\", line)\r\n    x_offset = 0\r\n    for zone in zones:\r\n        name, width_pct = parse_zone(zone)\r\n        width_px = width_pct * canvasWidth\r\n        # Dessiner le rectangle\r\n        brush = System.Windows.Media.SolidColorBrush(System.Windows.Media.ColorConverter.ConvertFromString(zone_colors[current_color]))\r\n        dc.DrawRectangle(brush, None, System.Windows.Rect(x_offset, y_offset, width_px, line_height))\r\n        # Dessiner le texte\r\n        formatted_text = System.Windows.Media.FormattedText(\r\n            name,\r\n            System.Globalization.CultureInfo.CurrentCulture,\r\n            System.Windows.FlowDirection.LeftToRight,\r\n            System.Windows.Media.Typeface(\"Segoe UI\"),\r\n            14,\r\n            System.Windows.Media.Brushes.Black,\r\n            1.0\r\n        )\r\n        text_x = x_offset + 5\r\n        text_y = y_offset + (line_height - formatted_text.Height)/2\r\n        dc.DrawText(formatted_text, System.Windows.Point(text_x, text_y))\r\n        x_offset += width_px\r\n        current_color = current_color+1 if current_color+1<len(zone_colors) else 0\r\n    y_offset += line_height"
+      }
     }
   ],
   "References": [],
@@ -411,7 +433,7 @@
           {
             "Key": "G7_Graphic",
             "Value": {
-              "zone": "908.4819032207424,84.67361988477072,779.5558785319433,1627.6118129709243",
+              "zone": "908.4819032207424,84.67361988477072,779.5558785319433,1390.5153777809505",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -622,6 +644,25 @@
             "Key": "G7_CodeGen_CS",
             "Value": {
               "zone": "1254.1293271172117,-302.3378792658264,604.4762563708632,2454.0698737714542",
+              "background": null,
+              "TitlePos": "TopLeft"
+            }
+          }
+        ],
+        "Commands": [],
+        "Geometries": [],
+        "Texts": []
+      }
+    },
+    {
+      "Key": "Interface",
+      "Value": {
+        "Description": "0,0,1000,1000",
+        "Objects": [
+          {
+            "Key": "LayoutMain",
+            "Value": {
+              "zone": "155.78044513628663,182.07908120242467,1128.839704896043,1080.8853118712273",
               "background": null,
               "TitlePos": "TopLeft"
             }
