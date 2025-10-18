@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'histoire.dart';
+import 'package:levoyageur/game_data_manager.dart';
 
 class Inventaire extends StatefulWidget {
   const Inventaire({super.key});
@@ -9,6 +10,8 @@ class Inventaire extends StatefulWidget {
 }
 
 class InventaireState extends State<Inventaire> {
+  var gameData = GameDataManager();
+
   int indexSelectionne = 0;
 
   Map<String, String> descriptionsObjets = {
@@ -21,18 +24,6 @@ class InventaireState extends State<Inventaire> {
         "Carte mémoire contenant des données cruciales pour la mission.",
     "Empty": "Emplacement vide.",
   };
-
-  List<String> objets = [
-    'ObjetLampe',
-    'ObjetOscillateur',
-    'ObjetNoyauEnergetique',
-    'ObjetCarteMemoire',
-    'Empty',
-    'Empty',
-    'Empty',
-    'Empty',
-    'Empty',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +68,7 @@ class InventaireState extends State<Inventaire> {
                             fit: BoxFit.fill,
                           ),
                           Image.asset(
-                            'assets/images/${objets[index]}.png',
+                            'assets/images/${gameData.inventory[index]}.png',
                             fit: BoxFit.fill,
                           ),
                         ],
@@ -86,6 +77,38 @@ class InventaireState extends State<Inventaire> {
                   ),
                 );
               }),
+            ),
+          ),
+        ),
+
+        // Texte "Status"
+        Align(
+          alignment: AlignmentGeometry.center,
+          child: Transform.translate(
+            offset: Offset(0, 110),
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: '${gameData.playerHealth}',
+                    style: TextStyle(
+                      fontSize: 40,
+                      decoration: null,
+                      decorationThickness: 0,
+                    ),
+                  ),
+                  TextSpan(
+                    text: "/100 PV",
+                    style: TextStyle(
+                      fontSize: 20,
+                      decoration: null,
+                      decorationThickness: 0,
+                    ),
+                  ),
+                ],
+              ),
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.green),
             ),
           ),
         ),
@@ -107,7 +130,7 @@ class InventaireState extends State<Inventaire> {
                 alignment:
                     Alignment.center, // Centre verticalement + horizontalement
                 child: Text(
-                  "${descriptionsObjets[objets[indexSelectionne]]}",
+                  "${descriptionsObjets[gameData.inventory[indexSelectionne]]}",
                   style: const TextStyle(
                     fontSize: 30,
                     color: Color.fromARGB(255, 99, 64, 0),
