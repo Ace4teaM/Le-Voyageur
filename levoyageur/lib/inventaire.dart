@@ -62,8 +62,10 @@ class InventaireState extends State<Inventaire> {
                     indexSelectionne = index;
                     setState(() {});
                   },
-                  onDoubleTap: () => print("Double tap Case $index cliquée"),
-                  onLongPress: () => print("Appui long Case $index cliquée"),
+                  onDoubleTap: () =>
+                      debugPrint("Double tap Case $index cliquée"),
+                  onLongPress: () =>
+                      debugPrint("Appui long Case $index cliquée"),
                   child: Container(
                     color: Colors.transparent,
                     child: Center(
