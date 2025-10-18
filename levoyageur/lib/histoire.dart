@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:levoyageur/accueil.dart';
 import 'package:levoyageur/inventaire.dart';
+import 'package:levoyageur/radial_stretch_detector.dart';
 
 class Histoire extends StatefulWidget {
   const Histoire({super.key});
@@ -21,6 +23,28 @@ class HistoireState extends State<Histoire> {
     "Empty": "assets/images/Empty.png",
     "La Grange": "assets/images/LaGrange.png",
   };
+
+  String choixA = 'ICI le texte du choix A';
+  String choixB = 'ICI le texte du choix B';
+
+  double choixProgressA = 0.0; // 0 = pas tiré, 1 = pleine puissance
+  double choixProgressB = 0.0; // 0 = pas tiré, 1 = pleine puissance
+
+  // si l'angle se trouve dans la moitié droite
+  bool isInRightHalf(double angle) {
+    // Normalisation de l’angle entre -π et +π
+    angle = normalizeAngle(angle);
+
+    // Partie droite du cercle (de -90° à +90°)
+    return angle >= -pi / 2 && angle <= pi / 2;
+  }
+
+  // normalise l'angle, Ramener entre -π et +π pour éviter les angles tournés plusieurs fois
+  double normalizeAngle(double angle) {
+    while (angle <= -pi) angle += 2 * pi;
+    while (angle > pi) angle -= 2 * pi;
+    return angle;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,11 +95,118 @@ class HistoireState extends State<Histoire> {
           ),
         ),
 
+        // Choix
+        Align(
+          alignment: Alignment.centerRight,
+          child: Transform.translate(
+            offset: Offset(
+              100 + -choixProgressA * 100.0,
+              -30.0,
+            ), // Croît avec la progression
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: Colors.transparent,
+              ),
+              child: Center(
+                child: Text(
+                  "A",
+                  style: TextStyle(
+                    decorationThickness: 0,
+                    color: Colors.white,
+                    fontSize: 60,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Transform.translate(
+            offset: Offset(
+              -100 + choixProgressB * 100.0,
+              -30.0,
+            ), // Croît avec la progression
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: Colors.transparent,
+              ),
+              child: Center(
+                child: Text(
+                  "B",
+                  style: TextStyle(
+                    decorationThickness: 0,
+                    color: Colors.white,
+                    fontSize: 60,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Center(
+          child: RadialStretchDetector(
+            onFullStretch: () {
+              debugPrint("ACTION VALIDÉE Radial !");
+              setState(() => choixProgressA = 0);
+              setState(() => choixProgressB = 0);
+            },
+            onReleased: () {
+              debugPrint("ACTION Annulé !");
+              setState(() => choixProgressA = 0);
+              setState(() => choixProgressB = 0);
+            },
+            onDragProgress: (double progress, double direction) {
+              debugPrint("$progress");
+              if (isInRightHalf(direction)) {
+                debugPrint("Côté DROIT");
+                setState(() => choixProgressB = progress);
+                setState(() => choixProgressA = 0);
+              } else {
+                debugPrint("Côté GAUCHE");
+                setState(() => choixProgressA = progress);
+                setState(() => choixProgressB = 0);
+              }
+            },
+            child: Transform.translate(
+              offset: Offset(0, -40), // Croît avec la progression
+              child: Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.transparent,
+                  border: Border.all(
+                    color: Colors.black, // Couleur de bordure
+                    width: 6, // Épaisseur de bordure
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    "Choix",
+                    style: TextStyle(
+                      decorationThickness: 0,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+
         // Bouton Retour en haut à gauche
         Positioned(
           top: 40,
           left: 20,
           child: FloatingActionButton(
+            heroTag: null,
             onPressed: () {
               Navigator.push(
                 context,
@@ -91,6 +222,7 @@ class HistoireState extends State<Histoire> {
           top: 40,
           right: 20,
           child: FloatingActionButton(
+            heroTag: "btnMenu",
             onPressed: () {
               Navigator.push(
                 context,

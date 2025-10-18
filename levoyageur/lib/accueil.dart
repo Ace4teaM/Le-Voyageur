@@ -85,6 +85,7 @@ class AccueilState extends State<Accueil> {
           top: 40,
           right: 20,
           child: FloatingActionButton(
+            heroTag: "btnMenu",
             onPressed: () {
               // action menu
             },
