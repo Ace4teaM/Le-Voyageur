@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:levoyageur/accueil.dart';
 import 'package:levoyageur/inventaire.dart';
 import 'package:levoyageur/radial_stretch_detector.dart';
+import 'package:levoyageur/game_data_manager.dart';
 
 class Histoire extends StatefulWidget {
   const Histoire({super.key});
@@ -12,6 +13,8 @@ class Histoire extends StatefulWidget {
 }
 
 class HistoireState extends State<Histoire> {
+  var gameData = GameDataManager();
+
   String imageSelectionne = 'La Grange';
 
   Map<String, String> images = {
