@@ -1,0 +1,77 @@
+//
+// Implémente le mécanisme de grafcet pour le déroulement de l'histoire
+//
+
+class Step {
+  String name;
+  String description;
+
+  Step({required this.name, this.description = ""});
+}
+
+class Transition {
+  double from;
+  double to;
+  final bool Function() condition;
+
+  Transition({required this.from, required this.to, required this.condition});
+}
+
+class Grafcet {
+  // 1. Instance unique (Singleton)
+  static final Grafcet _instance = Grafcet._internal();
+  factory Grafcet() => _instance;
+
+  final Map<double, Step> _steps = {}; // Remplace decimal par double
+  final List<double> _initialSteps = [];
+  final List<Transition> _transitions = [];
+
+  Grafcet._internal()
+    {
+        // Définition des étapes
+        {{- for e in etapes }}
+        addStep({{ e.numero }}, Step(name:"{{ e.label }}"){{ if e.numero == 1 }}, initial: true{{ end }});
+        {{- end }}
+
+        // Définition des transitions
+        {{- for t in transitions }}
+        addTransition({{ t.source }}, {{ t.destination }}, () => true); // toujours vrai
+        {{- end }}
+    }
+    
+  // Obtient une étape
+  Step? getStep(double number) {
+    if (!_steps.containsKey(number)) {
+      debugPrint("L'étape $number n'existe pas.");
+      return null;
+    }
+    return _steps[number];
+  }
+
+  // Ajoute une étape
+  void addStep(double number, Step step, {bool initial = false}) {
+    if (_steps.containsKey(number)) {
+      throw ArgumentError("L'étape $number existe déjà.");
+    }
+    _steps[number] = step;
+
+    if (initial) {
+      _initialSteps.add(number);
+    }
+  }
+
+  // Ajoute une transition
+  void addTransition(double from, double to, bool Function() condition) {
+    if (!_steps.containsKey(from) || !_steps.containsKey(to)) {
+      throw ArgumentError("Les étapes source ou destination n'existent pas.");
+    }
+
+    _transitions.add(Transition(from: from, to:to, condition:condition));
+  }
+
+  // Récupération de toutes les étapes
+  Iterable<MapEntry<double, Step>> getAllSteps() => _steps.entries;
+
+  // Récupération de toutes les transitions
+  Iterable<Transition> getAllTransitions() => _transitions;
+}

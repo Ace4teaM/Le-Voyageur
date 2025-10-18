@@ -1,4 +1,5 @@
 import 'package:flutter/rendering.dart';
+import 'package:levoyageur/game_data_grafcet.dart';
 
 // Classe de gestion des données de jeu persistantes
 class GameDataManager {
@@ -24,6 +25,18 @@ class GameDataManager {
   ];
 
   int playerHealth = 100;
+
+  double grafcetStep = 1;
+
+  String? getStepName() {
+    var grafcet = Grafcet();
+    return grafcet.getStep(grafcetStep)?.name;
+  }
+
+  String? getStepDescription() {
+    var grafcet = Grafcet();
+    return grafcet.getStep(grafcetStep)?.description;
+  }
 
   // 4. Méthodes pour gérer les données
   void addItem(String item) {
