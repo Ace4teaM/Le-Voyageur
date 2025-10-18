@@ -1,0 +1,38 @@
+class StoryText {
+  static const String chapitre1 = '''
+{{chapitre1}}
+  ''';
+  static const String chapitre2 = '''
+{{chapitre2}}
+  ''';
+  static const String chapitre3 = '''
+{{chapitre3}}
+  ''';
+  static const String chapitre4 = '''
+{{chapitre4}}
+  ''';
+  static const String chapitre5 = '''
+{{chapitre5}}
+  ''';
+  static const String chapitre6 = '''
+{{chapitre6}}
+  ''';
+  static const String chapitre7 = '''
+{{chapitre7}}
+  ''';
+  static const String chapitre8 = '''
+{{chapitre8}}
+  ''';
+  static const String chapitre9 = '''
+{{chapitre9}}
+  ''';
+  static const String chapitreFinal = '''
+{{chapitreFinal}}
+  ''';
+  static const String fin1 = '''
+{{fin1}}
+  ''';
+  static const String fin2 = '''
+{{fin2}}
+  ''';
+}

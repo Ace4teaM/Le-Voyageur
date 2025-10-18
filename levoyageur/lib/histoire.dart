@@ -84,7 +84,7 @@ class HistoireState extends State<Histoire> {
                 alignment:
                     Alignment.center, // Centre verticalement + horizontalement
                 child: Text(
-                  "TEXTE DE L'HISTOIRE ICI",
+                  gameData.getStepDescription()!,
                   style: const TextStyle(
                     fontSize: 30,
                     color: Color.fromARGB(255, 99, 64, 0),
