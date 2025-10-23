@@ -389,7 +389,7 @@
         "UserAction": "",
         "LoopMethod": "",
         "InitMethod": "",
-        "BuildMethod": "#construit le code générique des instances du grafcet\r\nimport ast\r\nimport clr\r\nclr.AddReference(\"System\")\r\nfrom System import Decimal\r\nfrom System.Globalization import CultureInfo\r\nfrom Scriban import Template\r\ncontenu = data.text()\r\ntpl = template.text()\r\n#\r\n# Initialisation des dictionnaires\r\n#\r\ndata = { 'etapes' : [], 'transitions':[] }\r\ncarte = {} # tableau des éléments par position X,Y\r\netapes = {} # liste des étapes et leurs descriptions\r\ntransitions = {} # liste des transitions et leurs descriptions\r\n# Traitement ligne par ligne\r\nfor ligne in contenu.strip().splitlines():\r\n    ligne = ligne.strip()\r\n    if ligne.startswith(\"Etape\"):\r\n        # Exemple: Etape 1 \"Initiale\"\r\n        parts = ligne.split(\" \", 2)\r\n        numero = Decimal.Parse(parts[1], CultureInfo.InvariantCulture)\r\n        label = parts[2].strip('\"')\r\n        data['etapes'].append({ 'numero': numero, 'label': label })\r\n    elif ligne.startswith(\"Transition\"):\r\n        # Exemple: Transition 1>2 \"Choix1\"\r\n        parts = ligne.split(\" \", 2)\r\n        source_dest = parts[1].split(\">\")\r\n        source = Decimal.Parse(source_dest[0], CultureInfo.InvariantCulture)\r\n        destination = Decimal.Parse(source_dest[1], CultureInfo.InvariantCulture)\r\n        label = parts[2].strip('\"')\r\n        data['transitions'].append({ 'source': source, 'destination': destination, 'label': label })\r\n# construit le code\r\nresult = Template.Parse(tpl).Render(data)\r\nout.write(result)",
+        "BuildMethod": "#construit le code générique des instances du grafcet\r\nimport ast\r\nimport clr\r\nclr.AddReference(\"System\")\r\nfrom System import Decimal\r\nfrom System.Globalization import CultureInfo\r\nfrom Scriban import Template\r\ncontenu = data.text()\r\ntpl = template.text()\r\n#\r\n# Initialisation des dictionnaires\r\n#\r\ndata = { 'etapes' : [], 'transitions':[] }\r\ncarte = {} # tableau des éléments par position X,Y\r\netapes = {} # liste des étapes et leurs descriptions\r\ntransitions = {} # liste des transitions et leurs descriptions\r\n# Traitement ligne par ligne\r\nfor ligne in contenu.strip().splitlines():\r\n    ligne = ligne.strip()\r\n    if ligne.startswith(\"Etape\"):\r\n        # Exemple: Etape 1 \"Initiale\"\r\n        parts = ligne.split(\" \", 2)\r\n        numero = Decimal.Parse(parts[1], CultureInfo.InvariantCulture)\r\n        label = parts[2].strip('\"')\r\n        data['etapes'].append({ 'numero': numero, 'label': label })\r\n    elif ligne.startswith(\"Transition\"):\r\n        # Exemple: Transition 1>2 \"Choix1\"\r\n        parts = ligne.split(\" \", 2)\r\n        source_dest = parts[1].split(\">\")\r\n        source = Decimal.Parse(source_dest[0], CultureInfo.InvariantCulture)\r\n        destination = Decimal.Parse(source_dest[1], CultureInfo.InvariantCulture)\r\n        condition = parts[2].strip('\"')\r\n        data['transitions'].append({ 'source': source, 'destination': destination, 'condition': condition })\r\n# construit le code\r\nresult = Template.Parse(tpl).Render(data)\r\nout.write(result)",
         "ObjectCode": "",
         "DrawCode": "import clr\r\nclr.AddReference('PresentationCore')\r\nclr.AddReference('WindowsBase')\r\nfrom System.Windows import Point, Rect, Size, FontStyles, FontWeights, FontStretches, TextTrimming\r\nfrom System.Windows.Media import Brushes, Typeface, FormattedText, Pen\r\nfrom System.Windows.Media import FontFamily\r\nfrom System.Windows import FlowDirection\r\nfrom System.Globalization import CultureInfo\r\ndef dessiner_rectangle_contenu(drawingContext):\r\n    # Dessiner le rectangle avec fond et contour\r\n    drawingContext.DrawRectangle(Brushes.LightGray, \r\n                                 Pen(Brushes.Black, 1), \r\n                                 rect)\r\n    # Définir les textes : titre et description\r\n    titre = \"Titre du rectangle\"\r\n    description = \"Ceci est une description\\nmultiligne du contenu.\"\r\n    # Définir la police et le style de texte\r\n    typeface = Typeface(FontFamily(\"Segoe UI\"), \r\n                        FontStyles.Normal,\r\n                        FontWeights.Bold, \r\n                        FontStretches.Normal)\r\n    # Texte du titre\r\n    formattedTitre = FormattedText(desc,\r\n                                   CultureInfo.CurrentCulture,\r\n                                   FlowDirection.LeftToRight,\r\n                                   typeface,\r\n                                   14,  # Taille du texte\r\n                                   Brushes.Black,\r\n                                   1.0)  # PixelsPerDip\r\n    # Texte de la description\r\n    typefaceDesc = Typeface(FontFamily(\"Segoe UI\"), \r\n                            FontStyles.Normal,\r\n                            FontWeights.Normal, \r\n                            FontStretches.Normal)\r\n    formattedDescription = FormattedText(out.text(),\r\n                                         CultureInfo.CurrentCulture,\r\n                                         FlowDirection.LeftToRight,\r\n                                         typefaceDesc,\r\n                                         12,\r\n                                         Brushes.Black,\r\n                                         1.0)\r\n    formattedDescription.MaxTextWidth = rect.Width - 20\r\n    # Positionner le texte dans le rectangle\r\n    drawingContext.DrawText(formattedTitre, Point(rect.X + 10, rect.Y + 10))\r\n    drawingContext.DrawText(formattedDescription, Point(rect.X + 10, rect.Y + 35))\r\ndessiner_rectangle_contenu(dc)"
       }
@@ -575,6 +575,107 @@
         "ObjectCode": "",
         "DrawCode": "import clr\r\nclr.AddReference('PresentationCore')\r\nclr.AddReference('WindowsBase')\r\nfrom System.Windows import Point, Rect, Size, FontStyles, FontWeights, FontStretches, TextTrimming\r\nfrom System.Windows.Media import Brushes, Typeface, FormattedText, Pen\r\nfrom System.Windows.Media import FontFamily\r\nfrom System.Windows import FlowDirection\r\nfrom System.Globalization import CultureInfo\r\ndef dessiner_rectangle_contenu(drawingContext):\r\n    # Dessiner le rectangle avec fond et contour\r\n    drawingContext.DrawRectangle(Brushes.LightGray, \r\n                                 Pen(Brushes.Black, 1), \r\n                                 rect)\r\n    # Définir les textes : titre et description\r\n    titre = \"Titre du rectangle\"\r\n    description = \"Ceci est une description\\nmultiligne du contenu.\"\r\n    # Définir la police et le style de texte\r\n    typeface = Typeface(FontFamily(\"Segoe UI\"), \r\n                        FontStyles.Normal,\r\n                        FontWeights.Bold, \r\n                        FontStretches.Normal)\r\n    # Texte du titre\r\n    formattedTitre = FormattedText(desc,\r\n                                   CultureInfo.CurrentCulture,\r\n                                   FlowDirection.LeftToRight,\r\n                                   typeface,\r\n                                   14,  # Taille du texte\r\n                                   Brushes.Black,\r\n                                   1.0)  # PixelsPerDip\r\n    # Texte de la description\r\n    typefaceDesc = Typeface(FontFamily(\"Segoe UI\"), \r\n                            FontStyles.Normal,\r\n                            FontWeights.Normal, \r\n                            FontStretches.Normal)\r\n    formattedDescription = FormattedText(out.text(),\r\n                                         CultureInfo.CurrentCulture,\r\n                                         FlowDirection.LeftToRight,\r\n                                         typefaceDesc,\r\n                                         12,\r\n                                         Brushes.Black,\r\n                                         1.0)\r\n    formattedDescription.MaxTextWidth = rect.Width - 20\r\n    # Positionner le texte dans le rectangle\r\n    drawingContext.DrawText(formattedTitre, Point(rect.X + 10, rect.Y + 10))\r\n    drawingContext.DrawText(formattedDescription, Point(rect.X + 10, rect.Y + 35))\r\ndessiner_rectangle_contenu(dc)"
       }
+    },
+    {
+      "Key": "Objets",
+      "Value": {
+        "BaseGuid": null,
+        "Guid": null,
+        "Tags": [],
+        "Description": "Liste des objets et leurs descriptions",
+        "InitialDataBase64": "",
+        "Editor": "text",
+        "Pointers": [],
+        "Functions": [],
+        "Properties": [],
+        "UserAction": "",
+        "LoopMethod": "",
+        "InitMethod": "",
+        "BuildMethod": "",
+        "ObjectCode": "",
+        "DrawCode": "import clr\r\nclr.AddReference('PresentationCore')\r\nclr.AddReference('WindowsBase')\r\nfrom System.Windows import Point, Rect, Size, FontStyles, FontWeights, FontStretches, TextTrimming\r\nfrom System.Windows.Media import Brushes, Typeface, FormattedText, Pen\r\nfrom System.Windows.Media import FontFamily\r\nfrom System.Windows import FlowDirection\r\nfrom System.Globalization import CultureInfo\r\ndef dessiner_rectangle_contenu(drawingContext):\r\n    # Dessiner le rectangle avec fond et contour\r\n    drawingContext.DrawRectangle(Brushes.LightGray, \r\n                                 Pen(Brushes.Black, 1), \r\n                                 rect)\r\n    # Définir les textes : titre et description\r\n    titre = \"Titre du rectangle\"\r\n    description = \"Ceci est une description\\nmultiligne du contenu.\"\r\n    # Définir la police et le style de texte\r\n    typeface = Typeface(FontFamily(\"Segoe UI\"), \r\n                        FontStyles.Normal,\r\n                        FontWeights.Bold, \r\n                        FontStretches.Normal)\r\n    # Texte du titre\r\n    formattedTitre = FormattedText(desc,\r\n                                   CultureInfo.CurrentCulture,\r\n                                   FlowDirection.LeftToRight,\r\n                                   typeface,\r\n                                   14,  # Taille du texte\r\n                                   Brushes.Black,\r\n                                   1.0)  # PixelsPerDip\r\n    # Texte de la description\r\n    typefaceDesc = Typeface(FontFamily(\"Courier New\"), \r\n                            FontStyles.Normal,\r\n                            FontWeights.Normal, \r\n                            FontStretches.Normal)\r\n    formattedDescription = FormattedText(out.text(),\r\n                                         CultureInfo.CurrentCulture,\r\n                                         FlowDirection.LeftToRight,\r\n                                         typefaceDesc,\r\n                                         12,\r\n                                         Brushes.Black,\r\n                                         1.0)\r\n    formattedDescription.MaxTextWidth = rect.Width - 20\r\n    # Positionner le texte dans le rectangle\r\n    drawingContext.DrawText(formattedTitre, Point(rect.X + 10, rect.Y + 10))\r\n    drawingContext.DrawText(formattedDescription, Point(rect.X + 10, rect.Y + 35))\r\ndessiner_rectangle_contenu(dc)"
+      }
+    },
+    {
+      "Key": "Objets_CodeGen",
+      "Value": {
+        "BaseGuid": null,
+        "Guid": null,
+        "Tags": [
+          "#dart",
+          "#codegen"
+        ],
+        "Description": "Objets Code (Dart)",
+        "InitialDataBase64": "",
+        "Editor": "text",
+        "Pointers": [
+          {
+            "Key": "objs",
+            "Value": {
+              "target": "Objets",
+              "tags": []
+            }
+          }
+        ],
+        "Functions": [],
+        "Properties": [],
+        "UserAction": "",
+        "LoopMethod": "",
+        "InitMethod": "",
+        "BuildMethod": "#construit le code générique des instances du grafcet\r\nimport ast\r\nimport clr\r\nclr.AddReference(\"System\")\r\nfrom System import Decimal\r\nfrom System.Globalization import CultureInfo\r\nfrom Scriban import Template\r\ncontenu = objs.text()\r\ntpl = \"\"\"\r\nMap<String, String> descriptionsObjets = {\r\n{{- for i in objects}}\r\n    \"Objet{{i.name}}\": \"{{i.value}}\",\r\n{{- end}}\r\n  };\r\n\"\"\"\r\n#\r\n# Initialisation des dictionnaires\r\n#\r\ndata = { 'objects' : [] }\r\n# Traitement ligne par ligne\r\nfor ligne in contenu.strip().splitlines():\r\n    parts = ligne.strip().split(\":\", 2)\r\n    data['objects'].append({'name':parts[0].strip(),'value':parts[1].strip()})\r\n# construit le code\r\nresult = Template.Parse(tpl).Render(data)\r\nout.write(result)",
+        "ObjectCode": "",
+        "DrawCode": "import clr\r\nclr.AddReference('PresentationCore')\r\nclr.AddReference('WindowsBase')\r\nfrom System.Windows import Point, Rect, Size, FontStyles, FontWeights, FontStretches, TextTrimming\r\nfrom System.Windows.Media import Brushes, Typeface, FormattedText, Pen\r\nfrom System.Windows.Media import FontFamily\r\nfrom System.Windows import FlowDirection\r\nfrom System.Globalization import CultureInfo\r\ndef dessiner_rectangle_contenu(drawingContext):\r\n    # Dessiner le rectangle avec fond et contour\r\n    drawingContext.DrawRectangle(Brushes.LightGray, \r\n                                 Pen(Brushes.Black, 1), \r\n                                 rect)\r\n    # Définir les textes : titre et description\r\n    titre = \"Titre du rectangle\"\r\n    description = \"Ceci est une description\\nmultiligne du contenu.\"\r\n    # Définir la police et le style de texte\r\n    typeface = Typeface(FontFamily(\"Segoe UI\"), \r\n                        FontStyles.Normal,\r\n                        FontWeights.Bold, \r\n                        FontStretches.Normal)\r\n    # Texte du titre\r\n    formattedTitre = FormattedText(desc,\r\n                                   CultureInfo.CurrentCulture,\r\n                                   FlowDirection.LeftToRight,\r\n                                   typeface,\r\n                                   14,  # Taille du texte\r\n                                   Brushes.Black,\r\n                                   1.0)  # PixelsPerDip\r\n    # Texte de la description\r\n    typefaceDesc = Typeface(FontFamily(\"Segoe UI\"), \r\n                            FontStyles.Normal,\r\n                            FontWeights.Normal, \r\n                            FontStretches.Normal)\r\n    formattedDescription = FormattedText(out.text(),\r\n                                         CultureInfo.CurrentCulture,\r\n                                         FlowDirection.LeftToRight,\r\n                                         typefaceDesc,\r\n                                         12,\r\n                                         Brushes.Black,\r\n                                         1.0)\r\n    formattedDescription.MaxTextWidth = rect.Width - 20\r\n    # Positionner le texte dans le rectangle\r\n    drawingContext.DrawText(formattedTitre, Point(rect.X + 10, rect.Y + 10))\r\n    drawingContext.DrawText(formattedDescription, Point(rect.X + 10, rect.Y + 35))\r\ndessiner_rectangle_contenu(dc)"
+      }
+    },
+    {
+      "Key": "Images",
+      "Value": {
+        "BaseGuid": null,
+        "Guid": null,
+        "Tags": [],
+        "Description": "Etats des images",
+        "InitialDataBase64": "",
+        "Editor": "text",
+        "Pointers": [],
+        "Functions": [],
+        "Properties": [],
+        "UserAction": "",
+        "LoopMethod": "",
+        "InitMethod": "",
+        "BuildMethod": "",
+        "ObjectCode": "",
+        "DrawCode": "import clr\r\nclr.AddReference('PresentationCore')\r\nclr.AddReference('WindowsBase')\r\nfrom System.Windows import Point, Rect, Size, FontStyles, FontWeights, FontStretches, TextTrimming\r\nfrom System.Windows.Media import Brushes, Typeface, FormattedText, Pen\r\nfrom System.Windows.Media import FontFamily\r\nfrom System.Windows import FlowDirection\r\nfrom System.Globalization import CultureInfo\r\ndef dessiner_rectangle_contenu(drawingContext):\r\n    # Dessiner le rectangle avec fond et contour\r\n    drawingContext.DrawRectangle(Brushes.LightGray, \r\n                                 Pen(Brushes.Black, 1), \r\n                                 rect)\r\n    # Définir les textes : titre et description\r\n    titre = \"Titre du rectangle\"\r\n    description = \"Ceci est une description\\nmultiligne du contenu.\"\r\n    # Définir la police et le style de texte\r\n    typeface = Typeface(FontFamily(\"Segoe UI\"), \r\n                        FontStyles.Normal,\r\n                        FontWeights.Bold, \r\n                        FontStretches.Normal)\r\n    # Texte du titre\r\n    formattedTitre = FormattedText(desc,\r\n                                   CultureInfo.CurrentCulture,\r\n                                   FlowDirection.LeftToRight,\r\n                                   typeface,\r\n                                   14,  # Taille du texte\r\n                                   Brushes.Black,\r\n                                   1.0)  # PixelsPerDip\r\n    # Texte de la description\r\n    typefaceDesc = Typeface(FontFamily(\"Courier New\"), \r\n                            FontStyles.Normal,\r\n                            FontWeights.Normal, \r\n                            FontStretches.Normal)\r\n    formattedDescription = FormattedText(out.text(),\r\n                                         CultureInfo.CurrentCulture,\r\n                                         FlowDirection.LeftToRight,\r\n                                         typefaceDesc,\r\n                                         12,\r\n                                         Brushes.Black,\r\n                                         1.0)\r\n    formattedDescription.MaxTextWidth = rect.Width - 20\r\n    # Positionner le texte dans le rectangle\r\n    drawingContext.DrawText(formattedTitre, Point(rect.X + 10, rect.Y + 10))\r\n    drawingContext.DrawText(formattedDescription, Point(rect.X + 10, rect.Y + 35))\r\ndessiner_rectangle_contenu(dc)"
+      }
+    },
+    {
+      "Key": "Images_CodeGen",
+      "Value": {
+        "BaseGuid": null,
+        "Guid": null,
+        "Tags": [
+          "#dart"
+        ],
+        "Description": "Images Code (Dart)",
+        "InitialDataBase64": "",
+        "Editor": "text",
+        "Pointers": [
+          {
+            "Key": "objs",
+            "Value": {
+              "target": "Images",
+              "tags": []
+            }
+          }
+        ],
+        "Functions": [],
+        "Properties": [],
+        "UserAction": "",
+        "LoopMethod": "",
+        "InitMethod": "",
+        "BuildMethod": "#construit le code générique des instances du grafcet\r\nimport ast\r\nimport clr\r\nclr.AddReference(\"System\")\r\nfrom System import Decimal\r\nfrom System.Globalization import CultureInfo\r\nfrom Scriban import Template\r\ncontenu = objs.text()\r\ntpl = \"\"\"\r\n// images States\r\n{{- for i in objects}}\r\nbool get {{i.name}} => ({{i.value}});\r\n{{- end}}\r\n\"\"\"\r\n#\r\n# Initialisation des dictionnaires\r\n#\r\ndata = { 'objects' : [] }\r\n# Traitement ligne par ligne\r\nfor ligne in contenu.strip().splitlines():\r\n    parts = ligne.strip().split(\":\", 2)\r\n    data['objects'].append({'name':parts[0].strip(),'value':parts[1].strip().replace('And','&&').replace('Or','||').replace('Not','!')})\r\n# construit le code\r\nresult = Template.Parse(tpl).Render(data)\r\nout.write(result)",
+        "ObjectCode": "",
+        "DrawCode": "import clr\r\nclr.AddReference('PresentationCore')\r\nclr.AddReference('WindowsBase')\r\nfrom System.Windows import Point, Rect, Size, FontStyles, FontWeights, FontStretches, TextTrimming\r\nfrom System.Windows.Media import Brushes, Typeface, FormattedText, Pen\r\nfrom System.Windows.Media import FontFamily\r\nfrom System.Windows import FlowDirection\r\nfrom System.Globalization import CultureInfo\r\ndef dessiner_rectangle_contenu(drawingContext):\r\n    # Dessiner le rectangle avec fond et contour\r\n    drawingContext.DrawRectangle(Brushes.LightGray, \r\n                                 Pen(Brushes.Black, 1), \r\n                                 rect)\r\n    # Définir les textes : titre et description\r\n    titre = \"Titre du rectangle\"\r\n    description = \"Ceci est une description\\nmultiligne du contenu.\"\r\n    # Définir la police et le style de texte\r\n    typeface = Typeface(FontFamily(\"Segoe UI\"), \r\n                        FontStyles.Normal,\r\n                        FontWeights.Bold, \r\n                        FontStretches.Normal)\r\n    # Texte du titre\r\n    formattedTitre = FormattedText(desc,\r\n                                   CultureInfo.CurrentCulture,\r\n                                   FlowDirection.LeftToRight,\r\n                                   typeface,\r\n                                   14,  # Taille du texte\r\n                                   Brushes.Black,\r\n                                   1.0)  # PixelsPerDip\r\n    # Texte de la description\r\n    typefaceDesc = Typeface(FontFamily(\"Segoe UI\"), \r\n                            FontStyles.Normal,\r\n                            FontWeights.Normal, \r\n                            FontStretches.Normal)\r\n    formattedDescription = FormattedText(out.text(),\r\n                                         CultureInfo.CurrentCulture,\r\n                                         FlowDirection.LeftToRight,\r\n                                         typefaceDesc,\r\n                                         12,\r\n                                         Brushes.Black,\r\n                                         1.0)\r\n    formattedDescription.MaxTextWidth = rect.Width - 20\r\n    # Positionner le texte dans le rectangle\r\n    drawingContext.DrawText(formattedTitre, Point(rect.X + 10, rect.Y + 10))\r\n    drawingContext.DrawText(formattedDescription, Point(rect.X + 10, rect.Y + 35))\r\ndessiner_rectangle_contenu(dc)"
+      }
     }
   ],
   "References": [],
@@ -587,7 +688,7 @@
           {
             "Key": "G7_Description",
             "Value": {
-              "zone": "-7.777544773426399,86.27763743369314,641.5954855636134,649.9107124103753",
+              "zone": "-7.777544773426399,86.27763743369314,488.0256634472654,671.8492584269962",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -596,6 +697,22 @@
             "Key": "G7_Graphic",
             "Value": {
               "zone": "908.4819032207424,84.67361988477072,779.5558785319433,1390.5153777809505",
+              "background": null,
+              "TitlePos": "TopLeft"
+            }
+          },
+          {
+            "Key": "Objets",
+            "Value": {
+              "zone": "-5.908021977900205,873.7435312897278,682.442586687154,118.88864287675091",
+              "background": null,
+              "TitlePos": "TopLeft"
+            }
+          },
+          {
+            "Key": "Images",
+            "Value": {
+              "zone": "-6.4821702993551185,1037.1271115130558,809.8803089709944,162.46033101202715",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -795,9 +912,9 @@
         "Description": "0,0,1000,1000",
         "Objects": [
           {
-            "Key": "Histoire_Template_Dart",
+            "Key": "Images_CodeGen",
             "Value": {
-              "zone": "2257.411118473635,-188.1005199185857,794.6552992775241,695.1286628313292",
+              "zone": "-456.51636993783063,-54.859181283175985,620.092627924369,209.17294545403303",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -805,15 +922,7 @@
           {
             "Key": "G7_CodeGen",
             "Value": {
-              "zone": "1254.1293271172117,-302.3378792658264,582.6958944632822,2027.1747803828662",
-              "background": null,
-              "TitlePos": "TopLeft"
-            }
-          },
-          {
-            "Key": "G7_Template_Dart",
-            "Value": {
-              "zone": "112.23745288584041,-22.256151004575827,863.5907403941238,1355.8048904390369",
+              "zone": "227.57081692515726,-320.2939232695119,929.2490850710137,2455.3997420255428",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -821,7 +930,15 @@
           {
             "Key": "Histoire_CodeGen",
             "Value": {
-              "zone": "2271.9467937191203,772.6361951640723,2007.5275941553132,4119.628939473313",
+              "zone": "1364.9973814143295,-321.33689921498933,2007.5275941553132,4119.628939473313",
+              "background": null,
+              "TitlePos": "TopLeft"
+            }
+          },
+          {
+            "Key": "Objets_CodeGen",
+            "Value": {
+              "zone": "-452.0324516531265,-329.44043840342556,565.6621630967443,190.41099276917635",
               "background": null,
               "TitlePos": "TopLeft"
             }

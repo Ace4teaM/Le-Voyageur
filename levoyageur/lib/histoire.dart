@@ -4,6 +4,8 @@ import 'package:levoyageur/accueil.dart';
 import 'package:levoyageur/inventaire.dart';
 import 'package:levoyageur/radial_stretch_detector.dart';
 import 'package:levoyageur/game_data_manager.dart';
+import 'package:levoyageur/game_data_grafcet.dart';
+import 'package:provider/provider.dart';
 
 class Histoire extends StatefulWidget {
   const Histoire({super.key});
@@ -13,20 +15,6 @@ class Histoire extends StatefulWidget {
 }
 
 class HistoireState extends State<Histoire> {
-  var gameData = GameDataManager();
-
-  String imageSelectionne = 'La Grange';
-
-  Map<String, String> images = {
-    "Couloir": "assets/images/Couloir.png",
-    "Fin": "assets/images/Fin.png",
-    "La Machine": "assets/images/LaMachine.png",
-    "Port Spatial": "assets/images/PortSpatial.png",
-    "Reveil": "assets/images/Reveil.png",
-    "Empty": "assets/images/Empty.png",
-    "La Grange": "assets/images/LaGrange.png",
-  };
-
   String choixA = 'ICI le texte du choix A';
   String choixB = 'ICI le texte du choix B';
 
@@ -59,42 +47,64 @@ class HistoireState extends State<Histoire> {
         ),
 
         // Image de l'histoire
-        Align(
-          alignment: Alignment.topCenter,
-          child: Container(
-            margin: const EdgeInsets.only(top: 0),
-            child: Image.asset(images[imageSelectionne]!, fit: BoxFit.fitWidth),
+        Consumer<GameDataManager>(
+          builder: (context, game, _) => Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              margin: const EdgeInsets.only(top: 0),
+              child: Image.asset(game.imageSelectionne, fit: BoxFit.fitWidth),
+            ),
           ),
         ),
 
         // Zone de texte en bas
-        Positioned(
-          bottom: 0,
-          left: 0,
-          width: MediaQuery.of(context).size.width,
-          height: 260,
-          child: Stack(
-            children: [
-              Image.asset('assets/images/ZoneTexte.png', fit: BoxFit.fill),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 20,
-                ),
-                alignment:
-                    Alignment.center, // Centre verticalement + horizontalement
-                child: Text(
-                  gameData.getStepDescription()!,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    color: Color.fromARGB(255, 99, 64, 0),
-                    decorationThickness: 0,
-                    fontFamily: "Serif",
+        Consumer<GameDataManager>(
+          builder: (context, game, _) => Positioned(
+            bottom: 0,
+            left: 0,
+            width: MediaQuery.of(context).size.width,
+            height: 260,
+            child: Stack(
+              children: [
+                Image.asset('assets/images/ZoneTexte.png', fit: BoxFit.fill),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
                   ),
-                  textAlign: TextAlign.center,
+                  alignment: Alignment
+                      .center, // Centre verticalement + horizontalement
+                  child: Text(
+                    game.stepDescription,
+                    style: const TextStyle(
+                      fontSize: 30,
+                      color: Color.fromARGB(255, 99, 64, 0),
+                      decorationThickness: 0,
+                      fontFamily: "Serif",
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
+              ],
+            ),
+          ),
+        ),
+
+        // Debug
+        Consumer<GameDataManager>(
+          builder: (context, game, _) => Positioned(
+            bottom: 300,
+            left: 0,
+            child: Text(
+              "Etape = ${game.Etape}",
+              style: const TextStyle(
+                fontSize: 30,
+                color: Colors.white,
+                decorationThickness: 0,
+                fontFamily: "Serif",
               ),
-            ],
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
 
@@ -153,49 +163,70 @@ class HistoireState extends State<Histoire> {
             ),
           ),
         ),
-        Center(
-          child: RadialStretchDetector(
-            onFullStretch: () {
-              debugPrint("ACTION VALIDÉE Radial !");
-              setState(() => choixProgressA = 0);
-              setState(() => choixProgressB = 0);
-            },
-            onReleased: () {
-              debugPrint("ACTION Annulé !");
-              setState(() => choixProgressA = 0);
-              setState(() => choixProgressB = 0);
-            },
-            onDragProgress: (double progress, double direction) {
-              debugPrint("$progress");
-              if (isInRightHalf(direction)) {
-                debugPrint("Côté DROIT");
-                setState(() => choixProgressB = progress);
-                setState(() => choixProgressA = 0);
-              } else {
-                debugPrint("Côté GAUCHE");
-                setState(() => choixProgressA = progress);
-                setState(() => choixProgressB = 0);
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              GameDataManager().Choix = 0;
+              debugPrint("OK");
+              for (var t in Grafcet().getTransitions(GameDataManager().Etape)) {
+                if (t.condition()) GameDataManager().Etape = t.to;
               }
-            },
-            child: Transform.translate(
-              offset: Offset(0, -40), // Croît avec la progression
-              child: Container(
-                width: 200,
-                height: 200,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.transparent,
-                  border: Border.all(
-                    color: Colors.black, // Couleur de bordure
-                    width: 6, // Épaisseur de bordure
+            });
+          },
+          child: Center(
+            child: RadialStretchDetector(
+              onFullStretch: () {
+                debugPrint("ACTION VALIDÉE Radial !");
+                // déclenche l'execution du grafcet
+                if (choixProgressA > 0)
+                  GameDataManager().Choix = 1;
+                else
+                  GameDataManager().Choix = 2;
+
+                for (var t in Grafcet().getTransitions(
+                  GameDataManager().Etape,
+                )) {
+                  if (t.condition()) GameDataManager().Etape = t.to;
+                }
+
+                // reinit l'etat du bouton radial
+                setState(() => choixProgressA = 0);
+                setState(() => choixProgressB = 0);
+              },
+              onReleased: () {
+                debugPrint("ACTION Annulé !");
+                setState(() => choixProgressA = 0);
+                setState(() => choixProgressB = 0);
+              },
+              onDragProgress: (double progress, double direction) {
+                if (isInRightHalf(direction)) {
+                  setState(() => choixProgressB = progress);
+                  setState(() => choixProgressA = 0);
+                } else {
+                  setState(() => choixProgressA = progress);
+                  setState(() => choixProgressB = 0);
+                }
+              },
+              child: Transform.translate(
+                offset: Offset(0, -40), // Croît avec la progression
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.transparent,
+                    border: Border.all(
+                      color: Colors.black, // Couleur de bordure
+                      width: 6, // Épaisseur de bordure
+                    ),
                   ),
-                ),
-                child: Center(
-                  child: Text(
-                    "Choix",
-                    style: TextStyle(
-                      decorationThickness: 0,
-                      color: Colors.white,
+                  child: Center(
+                    child: Text(
+                      "Choix",
+                      style: TextStyle(
+                        decorationThickness: 0,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),

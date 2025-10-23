@@ -1,8 +1,8 @@
-import 'package:flutter/rendering.dart';
-
 //
 // Implémente le mécanisme de grafcet pour le déroulement de l'histoire
 //
+import 'package:flutter/rendering.dart';
+import 'package:levoyageur/game_data_manager.dart';
 
 class Step {
   String name;
@@ -24,9 +24,41 @@ class Grafcet {
   static final Grafcet _instance = Grafcet._internal();
   factory Grafcet() => _instance;
 
-  final Map<double, Step> _steps = {};
+  final Map<double, Step> _steps = {}; // Remplace decimal par double
   final List<double> _initialSteps = [];
   final List<Transition> _transitions = [];
+
+  // Getter / Setter
+  int get PV => GameDataManager().Health;
+  set PV(int value) => GameDataManager().Health = value;
+
+  bool get Lampe => GameDataManager().inventory.contains("ObjetLampe");
+  set Lampe(bool value) => value
+      ? GameDataManager().addItem("ObjetLampe")
+      : GameDataManager().removeItem("ObjetLampe");
+
+  bool get Oscillateur =>
+      GameDataManager().inventory.contains("ObjetOscillateur");
+  set Oscillateur(bool value) => value
+      ? GameDataManager().addItem("ObjetOscillateur")
+      : GameDataManager().removeItem("ObjetOscillateur");
+
+  bool get NoyauEnergetique =>
+      GameDataManager().inventory.contains("ObjetNoyauEnergetique");
+  set NoyauEnergetique(bool value) => value
+      ? GameDataManager().addItem("ObjetNoyauEnergetique")
+      : GameDataManager().removeItem("ObjetNoyauEnergetique");
+
+  bool get CarteMemoire =>
+      GameDataManager().inventory.contains("ObjetCarteMemoire");
+  set CarteMemoire(bool value) => value
+      ? GameDataManager().addItem("ObjetCarteMemoire")
+      : GameDataManager().removeItem("ObjetCarteMemoire");
+
+  bool get ChoixA => GameDataManager().Choix == 1;
+  bool get ChoixB => GameDataManager().Choix == 2;
+
+  bool get OK => GameDataManager().Choix == 0;
 
   Grafcet._internal() {
     // Définition des étapes
@@ -56,38 +88,38 @@ class Grafcet {
     addStep(6.2, Step(name: "FIN 2"));
 
     // Définition des transitions
-    addTransition(1, 2, () => true); // toujours vrai
-    addTransition(2, 2.1, () => true); // toujours vrai
-    addTransition(2, 2.2, () => true); // toujours vrai
-    addTransition(2.1, 4, () => true); // toujours vrai
-    addTransition(2.2, 4, () => true); // toujours vrai
-    addTransition(1, 3, () => true); // toujours vrai
-    addTransition(3, 3.1, () => true); // toujours vrai
-    addTransition(3, 3.2, () => true); // toujours vrai
-    addTransition(3.1, 4, () => true); // toujours vrai
-    addTransition(3.2, 4, () => true); // toujours vrai
-    addTransition(4, 4.1, () => true); // toujours vrai
-    addTransition(4.1, 4.11, () => true); // toujours vrai
-    addTransition(4.1, 4.12, () => true); // toujours vrai
-    addTransition(4.11, 5, () => true); // toujours vrai
-    addTransition(4.12, 5, () => true); // toujours vrai
-    addTransition(4, 4.2, () => true); // toujours vrai
-    addTransition(4.2, 4.21, () => true); // toujours vrai
-    addTransition(4.2, 4.22, () => true); // toujours vrai
-    addTransition(4.21, 5, () => true); // toujours vrai
-    addTransition(4.22, 5, () => true); // toujours vrai
-    addTransition(5, 5.1, () => true); // toujours vrai
-    addTransition(5.1, 5.11, () => true); // toujours vrai
-    addTransition(5.1, 5.12, () => true); // toujours vrai
-    addTransition(5.11, 6, () => true); // toujours vrai
-    addTransition(5.12, 6, () => true); // toujours vrai
-    addTransition(5, 5.2, () => true); // toujours vrai
-    addTransition(5.2, 5.21, () => true); // toujours vrai
-    addTransition(5.2, 5.22, () => true); // toujours vrai
-    addTransition(5.21, 6, () => true); // toujours vrai
-    addTransition(5.22, 6, () => true); // toujours vrai
-    addTransition(6, 6.1, () => true); // toujours vrai
-    addTransition(6, 6.2, () => true); // toujours vrai
+    addTransition(1, 2, () => ChoixA);
+    addTransition(2, 2.1, () => ChoixA);
+    addTransition(2, 2.2, () => ChoixB);
+    addTransition(2.1, 4, () => OK);
+    addTransition(2.2, 4, () => OK);
+    addTransition(1, 3, () => ChoixB);
+    addTransition(3, 3.1, () => ChoixA);
+    addTransition(3, 3.2, () => ChoixB);
+    addTransition(3.1, 4, () => OK);
+    addTransition(3.2, 4, () => OK);
+    addTransition(4, 4.1, () => ChoixA);
+    addTransition(4.1, 4.11, () => ChoixA);
+    addTransition(4.1, 4.12, () => ChoixB);
+    addTransition(4.11, 5, () => OK);
+    addTransition(4.12, 5, () => OK);
+    addTransition(4, 4.2, () => ChoixB);
+    addTransition(4.2, 4.21, () => ChoixA);
+    addTransition(4.2, 4.22, () => ChoixB);
+    addTransition(4.21, 5, () => OK);
+    addTransition(4.22, 5, () => OK);
+    addTransition(5, 5.1, () => ChoixA);
+    addTransition(5.1, 5.11, () => ChoixA);
+    addTransition(5.1, 5.12, () => ChoixB);
+    addTransition(5.11, 6, () => OK);
+    addTransition(5.12, 6, () => OK);
+    addTransition(5, 5.2, () => ChoixB);
+    addTransition(5.2, 5.21, () => ChoixA);
+    addTransition(5.2, 5.22, () => ChoixB);
+    addTransition(5.21, 6, () => OK);
+    addTransition(5.22, 6, () => OK);
+    addTransition(6, 6.1, () => ChoixA);
+    addTransition(6, 6.2, () => ChoixB);
   }
 
   // Obtient une étape
@@ -125,4 +157,8 @@ class Grafcet {
 
   // Récupération de toutes les transitions
   Iterable<Transition> getAllTransitions() => _transitions;
+
+  // Récupération des transitions
+  Iterable<Transition> getTransitions(double fromStep) =>
+      _transitions.where((t) => (t.from == fromStep));
 }

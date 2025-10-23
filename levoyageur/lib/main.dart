@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'accueil.dart';
+import 'package:provider/provider.dart';
+import 'package:levoyageur/game_data_manager.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(create: (_) => GameDataManager(), child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
