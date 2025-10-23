@@ -1,0 +1,8 @@
+
+Map<String, String> descriptionsObjets = {
+    "ObjetLampe": "Lampe à lumière noir capable de révéler des objets cachés.",
+    "ObjetOscillateur": "Oscillateur de fréquence pour stabiliser les portails dimensionnels.",
+    "ObjetNoyauEnergetique": "Noyau énergétique fournissant une puissance illimitée.",
+    "ObjetCarteMemoire": "Carte mémoire contenant des données cruciales pour la mission.",
+    "ObjetEmpty": "Emplacement vide.",
+  };

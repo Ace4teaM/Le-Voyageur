@@ -1,0 +1,8 @@
+LaGrange     : Etape == 1
+Couloir      : Etape >= 2 And Etape < 3
+Fin          : Etape >= 3 And Etape < 3
+LaMachine    : Etape >= 4 And Etape < 4
+PortSpatial  : Etape >= 5 And Etape < 5
+Reveil       : Etape >= 6 And Etape < 6
+Empty        : Not LaGrange And Not Couloir And Not Fin And Not LaMachine And Not PortSpatial And Not Reveil
+

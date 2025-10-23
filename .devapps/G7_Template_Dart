@@ -1,6 +1,8 @@
 //
 // Implémente le mécanisme de grafcet pour le déroulement de l'histoire
 //
+import 'package:flutter/rendering.dart';
+import 'package:levoyageur/game_data_manager.dart';
 
 class Step {
   String name;
@@ -26,18 +28,39 @@ class Grafcet {
   final List<double> _initialSteps = [];
   final List<Transition> _transitions = [];
 
-  Grafcet._internal()
-    {
-        // Définition des étapes
-        {{- for e in etapes }}
-        addStep({{ e.numero }}, Step(name:"{{ e.label }}"){{ if e.numero == 1 }}, initial: true{{ end }});
-        {{- end }}
+  // Getter / Setter
+  int get PV => GameDataManager().Health;
+  set PV(int value) => GameDataManager().Health = value;
 
-        // Définition des transitions
-        {{- for t in transitions }}
-        addTransition({{ t.source }}, {{ t.destination }}, () => true); // toujours vrai
-        {{- end }}
-    }
+  bool get Lampe => GameDataManager().inventory.contains("ObjetLampe");
+  set Lampe(bool value) => value ? GameDataManager().addItem("ObjetLampe") : GameDataManager().removeItem("ObjetLampe");
+
+  bool get Oscillateur => GameDataManager().inventory.contains("ObjetOscillateur");
+  set Oscillateur(bool value) => value ? GameDataManager().addItem("ObjetOscillateur") : GameDataManager().removeItem("ObjetOscillateur");
+
+  bool get NoyauEnergetique => GameDataManager().inventory.contains("ObjetNoyauEnergetique");
+  set NoyauEnergetique(bool value) => value ? GameDataManager().addItem("ObjetNoyauEnergetique") : GameDataManager().removeItem("ObjetNoyauEnergetique");
+
+  bool get CarteMemoire => GameDataManager().inventory.contains("ObjetCarteMemoire");
+  set CarteMemoire(bool value) => value ? GameDataManager().addItem("ObjetCarteMemoire") : GameDataManager().removeItem("ObjetCarteMemoire");
+
+  bool get ChoixA => GameDataManager().Choix == 1;
+  bool get ChoixB => GameDataManager().Choix == 2;
+
+  bool get OK => GameDataManager().Choix == 0;
+
+  Grafcet._internal()
+  {
+      // Définition des étapes
+      {{- for e in etapes }}
+      addStep({{ e.numero }}, Step(name:"{{ e.label }}"){{ if e.numero == 1 }}, initial: true{{ end }});
+      {{- end }}
+
+      // Définition des transitions
+      {{- for t in transitions }}
+      addTransition({{ t.source }}, {{ t.destination }}, () => {{ t.condition }}); // toujours vrai
+      {{- end }}
+  }
     
   // Obtient une étape
   Step? getStep(double number) {
@@ -74,4 +97,8 @@ class Grafcet {
 
   // Récupération de toutes les transitions
   Iterable<Transition> getAllTransitions() => _transitions;
+  
+  // Récupération des transitions
+  Iterable<Transition> getTransitions(double fromStep) =>
+      _transitions.where((t) => (t.from == fromStep));
 }

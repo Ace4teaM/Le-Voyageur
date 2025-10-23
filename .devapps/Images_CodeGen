@@ -1,0 +1,9 @@
+
+// images States
+bool get LaGrange => (Etape == 1);
+bool get Couloir => (Etape >= 2 && Etape < 3);
+bool get Fin => (Etape >= 3 && Etape < 3);
+bool get LaMachine => (Etape >= 4 && Etape < 4);
+bool get PortSpatial => (Etape >= 5 && Etape < 5);
+bool get Reveil => (Etape >= 6 && Etape < 6);
+bool get Empty => (! LaGrange && ! Couloir && ! Fin && ! LaMachine && ! PortSpatial && ! Reveil);

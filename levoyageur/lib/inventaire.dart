@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'histoire.dart';
 import 'package:levoyageur/game_data_manager.dart';
+import 'package:provider/provider.dart';
 
 class Inventaire extends StatefulWidget {
   const Inventaire({super.key});
@@ -10,8 +11,6 @@ class Inventaire extends StatefulWidget {
 }
 
 class InventaireState extends State<Inventaire> {
-  var gameData = GameDataManager();
-
   int indexSelectionne = 0;
 
   Map<String, String> descriptionsObjets = {
@@ -35,112 +34,118 @@ class InventaireState extends State<Inventaire> {
         ),
 
         // Grille des objets
-        Container(
-          margin: const EdgeInsets.only(top: 130),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          alignment:
-              Alignment.topCenter, // Centre verticalement + horizontalement
-          child: SizedBox(
-            width: 300, // largeur de la grille
-            height: 400, // hauteur de la grille
-            child: GridView.count(
-              crossAxisCount: 3, // 3 colonnes
-              mainAxisSpacing: 6,
-              crossAxisSpacing: 6,
-              children: List.generate(9, (index) {
-                return GestureDetector(
-                  onTap: () {
-                    indexSelectionne = index;
-                    setState(() {});
-                  },
-                  onDoubleTap: () =>
-                      debugPrint("Double tap Case $index cliquée"),
-                  onLongPress: () =>
-                      debugPrint("Appui long Case $index cliquée"),
-                  child: Container(
-                    color: Colors.transparent,
-                    child: Center(
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/images/CaseInventaire.png',
-                            fit: BoxFit.fill,
-                          ),
-                          Image.asset(
-                            'assets/images/${gameData.inventory[index]}.png',
-                            fit: BoxFit.fill,
-                          ),
-                        ],
+        Consumer<GameDataManager>(
+          builder: (context, game, _) => Container(
+            margin: const EdgeInsets.only(top: 130),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            alignment:
+                Alignment.topCenter, // Centre verticalement + horizontalement
+            child: SizedBox(
+              width: 300, // largeur de la grille
+              height: 400, // hauteur de la grille
+              child: GridView.count(
+                crossAxisCount: 3, // 3 colonnes
+                mainAxisSpacing: 6,
+                crossAxisSpacing: 6,
+                children: List.generate(9, (index) {
+                  return GestureDetector(
+                    onTap: () {
+                      indexSelectionne = index;
+                      setState(() {});
+                    },
+                    onDoubleTap: () =>
+                        debugPrint("Double tap Case $index cliquée"),
+                    onLongPress: () =>
+                        debugPrint("Appui long Case $index cliquée"),
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Center(
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/CaseInventaire.png',
+                              fit: BoxFit.fill,
+                            ),
+                            Image.asset(
+                              'assets/images/${game.inventory[index]}.png',
+                              fit: BoxFit.fill,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                }),
+              ),
             ),
           ),
         ),
 
         // Texte "Status"
-        Align(
-          alignment: AlignmentGeometry.center,
-          child: Transform.translate(
-            offset: Offset(0, 110),
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: '${gameData.playerHealth}',
-                    style: TextStyle(
-                      fontSize: 40,
-                      decoration: null,
-                      decorationThickness: 0,
+        Consumer<GameDataManager>(
+          builder: (context, game, _) => Align(
+            alignment: AlignmentGeometry.center,
+            child: Transform.translate(
+              offset: Offset(0, 110),
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: '${game.Health}',
+                      style: TextStyle(
+                        fontSize: 40,
+                        decoration: null,
+                        decorationThickness: 0,
+                      ),
                     ),
-                  ),
-                  TextSpan(
-                    text: "/100 PV",
-                    style: TextStyle(
-                      fontSize: 20,
-                      decoration: null,
-                      decorationThickness: 0,
+                    TextSpan(
+                      text: "/100 PV",
+                      style: TextStyle(
+                        fontSize: 20,
+                        decoration: null,
+                        decorationThickness: 0,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.green),
               ),
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.green),
             ),
           ),
         ),
 
         // Zone de texte en bas
-        Positioned(
-          bottom: 0,
-          left: 0,
-          width: MediaQuery.of(context).size.width,
-          height: 260,
-          child: Stack(
-            children: [
-              Image.asset('assets/images/ZoneTexte.png', fit: BoxFit.fill),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 20,
-                ),
-                alignment:
-                    Alignment.center, // Centre verticalement + horizontalement
-                child: Text(
-                  "${descriptionsObjets[gameData.inventory[indexSelectionne]]}",
-                  style: const TextStyle(
-                    fontSize: 30,
-                    color: Color.fromARGB(255, 99, 64, 0),
-                    decorationThickness: 0,
-                    fontFamily: "Serif",
+        Consumer<GameDataManager>(
+          builder: (context, game, _) => Positioned(
+            bottom: 0,
+            left: 0,
+            width: MediaQuery.of(context).size.width,
+            height: 260,
+            child: Stack(
+              children: [
+                Image.asset('assets/images/ZoneTexte.png', fit: BoxFit.fill),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
                   ),
-                  textAlign: TextAlign.center,
+                  alignment: Alignment
+                      .center, // Centre verticalement + horizontalement
+                  child: Text(
+                    "${descriptionsObjets[game.inventory[indexSelectionne]]}",
+                    style: const TextStyle(
+                      fontSize: 30,
+                      color: Color.fromARGB(255, 99, 64, 0),
+                      decorationThickness: 0,
+                      fontFamily: "Serif",
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
 
