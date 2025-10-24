@@ -2,13 +2,19 @@ class StoryText {
   static const String content = '''
 [1]
 
-Tu t'appelles Eliott, 19 ans, étudiant en astrophysique, solitaire et curieux de tout ce qui touche à l’univers. Ce soir-là, tu es dans ton observatoire de fortune, installé dans la grange abandonnée de ton grand-père. Le ciel est limpide. Soudain, un phénomène étrange déchire l’espace : une faille brillante, pulsant comme un cœur de lumière. Avant que tu puisses reculer, un rayon jaillit de l’ouverture et t’enveloppe.
+Tu t'appelles Eliott, 19 ans, étudiant en astrophysique, solitaire et curieux de tout ce qui touche à l’univers.
+
+Ce soir-là, tu es dans ton observatoire de fortune, installé dans la grange abandonnée de ton grand-père. Le ciel est limpide.
+
+Soudain, un phénomène étrange déchire l’espace : une faille brillante, pulsant comme un cœur de lumière. Avant que tu puisses reculer, un rayon jaillit de l’ouverture et t’enveloppe.
 
 Le monde autour de toi disparaît.
 
 [1.1]
 
-Quand tu ouvres les yeux, tu es allongé sur un sol métallique. Le ciel au-dessus est violet, zébré de deux lunes. Des créatures humanoïdes passent à côté de toi sans te prêter attention. Des tours gigantesques flottent dans les airs. Tu réalises : tu n’es plus sur Terre.
+Quand tu ouvres les yeux, tu es allongé sur un sol métallique. Le ciel au-dessus est violet, zébré de deux lunes.
+
+Des créatures humanoïdes passent à côté de toi sans te prêter attention. Des tours gigantesques flottent dans les airs. Tu réalises : tu n’es plus sur Terre.
 
 [2]
 
@@ -57,22 +63,22 @@ B: Tenter de rester immobile et silencieux, espérant qu’il ne te détecte pas
 
 [5.11]
 
-A. Flash lumineux
-Tu déclenches le flash de secours du traducteur : une lumière aveuglante explose dans le noir. Le varg hurle et bat en retraite, heurtant un mur. Tu profites de l’occasion pour foncer à l’intérieur de la salle de stockage. Là, après quelques minutes de fouilles, tu trouves le noyau énergétique… juste à temps pour t’enfuir avant que les autres vargs arrivent.
+Tu déclenches le flash de ta lampe de poche : une lumière aveuglante explose dans le noir.
 
-→ Tu repars victorieux, mais ton traducteur est endommagé. Il ne fonctionnera plus longtemps.
+Le varg hurle et bat en retraite, heurtant un mur. Tu profites de l’occasion pour foncer à l’intérieur de la salle de stockage.
+
+Là, après quelques minutes de fouilles, tu trouves le noyau énergétique… juste à temps pour t’enfuir avant que les autres vargs arrivent.
+
+→ Tu repars victorieux. 
 
 [5.12]
 
-
-B. Silence mortel
 Tu ne bouges pas. Le varg s’approche lentement… il te renifle… et soudain, il attaque. Tu n’as que le temps de crier avant qu’il te projette contre un mur.
 
 → Tu es gravement blessé. Pix te sauve in extremis, mais tu es incapable de continuer la mission. Tu perds cette chance.
 
 [5.2]
 
-Négocier avec les contrebandiers
 Tu te rends à un vieux port spatial abandonné, où des contrebandiers, les Zhirkal, font commerce d’objets technologiques. Nara t’a prévenu : ils n’aident jamais sans contrepartie.
 
 Le chef Zhirkal, une créature au corps couvert de chitine bleue, te propose un marché :
@@ -88,7 +94,6 @@ B: Tenter de voler la pièce au Zhirkal.
 
 [5.21]
 
-La livraison
 Tu acceptes. Tu prends la caisse à bord du Cribleur et fais le trajet jusqu’à une station orbitale désaffectée. À l’arrivée, tu déposes la caisse sans encombre. De retour, les Zhirkal te remettent la pièce comme promis.
 
 Mais ton nom est maintenant sur une liste noire de la sécurité spatiale. Tu es fiché comme contrebandier.
@@ -98,7 +103,6 @@ Mais ton nom est maintenant sur une liste noire de la sécurité spatiale. Tu es
 
 [5.22]
 
-Le vol
 La nuit, tu t’infiltres dans leur entrepôt. Pix te guide à travers les conduits d’aération. Tu trouves la pièce… mais déclenches une alarme en la décrochant.
 
 Tu t’échappes de justesse avec le noyau, mais les Zhirkal jurent de te retrouver. Une prime est mise sur ta tête.
@@ -113,7 +117,9 @@ Avec le noyau énergétique en main, tu dois maintenant trouver l’oscillateur 
 
 [7]
 
-Tu arrives sur la planète Velmor, un monde entièrement recouvert d’océans bioluminescents. La lumière verte et bleue des abysses se reflète sur les nuages bas. Ton objectif : récupérer l’oscillateur dimensionnel, conservé dans un sanctuaire technologique sous-marin gardé par les Né'Kaari, une race aquatique aux traditions strictes.
+Tu arrives sur la planète Velmor, un monde entièrement recouvert d’océans bioluminescents. La lumière verte et bleue des abysses se reflète sur les nuages bas.
+
+Ton objectif : récupérer l’oscillateur dimensionnel, conservé dans un sanctuaire technologique sous-marin gardé par les Né'Kaari, une race aquatique aux traditions strictes.
 
 Nara t’a prévenu : ce n’est pas un peuple agressif, mais ils n’ouvrent jamais leur sanctuaire aux étrangers. Tu dois soit gagner leur confiance, soit t’introduire discrètement dans les profondeurs.
 
@@ -126,12 +132,10 @@ Tu as deux options :
 Choisis :
 
 A: Tenter l’Épreuve de l’Équilibre pour mériter la confiance des Né’Kaari.
-
 B: Chercher un passage secret vers le sanctuaire, en contournant leur société.
 
 [7.1]
 
-Option 1 : L’Épreuve de l’Équilibre
 Tu acceptes l’épreuve. Selyna t’emmène dans une capsule subaquatique qui plonge à plus de 900 mètres de profondeur, jusqu’à un dôme ancien illuminé par des coraux luminescents.
 
 Tu dois traverser une passerelle instable, suspendue au-dessus d’un puits abyssal, tout en portant deux sphères d’eau gravitationnelle. Si tu laisses tomber l’une d’elles, tu échoues.
@@ -142,8 +146,6 @@ B: Traverser rapidement avant que la structure ne s’effondre.
 
 [7.11]
 
-
-A. Lenteur et équilibre
 Tu avances doucement, chaque pas calculé, malgré la pression de l’eau et la fatigue. Tu tiens bon. Les Né’Kaari, observant ton respect du rite, t’accordent leur confiance. Selyna te remet l’oscillateur dimensionnel, avec un geste solennel :
 
 — « Tu es digne de porter ce fragment de notre mémoire. »
@@ -152,17 +154,12 @@ Tu avances doucement, chaque pas calculé, malgré la pression de l’eau et la 
 
 [7.12]
 
-
-
-B. Vitesse et risque
 Tu cours. Mauvaise idée. Une section de la passerelle cède, et tu laisses tomber une sphère. L’épreuve est interrompue. Les Né’Kaari, blessés dans leur fierté, te bannissent immédiatement de la cité. Tu t’échappes de justesse avec l’aide de Pix.
 
 → Tu échoues. Tu devras revenir clandestinement (et risquer de tout perdre).
 
 [7.2]
 
-
-Option 2 : Infiltration
 Avec Pix, tu analyses les courants marins et repères un tunnel naturel menant au sanctuaire. Il faudra plonger sans combinaison pressurisée avancée — un pari dangereux. Pix adapte ta combinaison avec des filtres improvisés, mais ils ne tiendront que 20 minutes.
 
 À l’intérieur, tu fais face à des drones sentinelles anciens mais toujours actifs.
@@ -173,8 +170,6 @@ B: Nager discrètement jusqu’au centre en évitant les capteurs.
 
 [7.22]
 
-
-B. Furtivité réussie
 Tu respires calmement, ton cœur battant au rythme des pulsations aquatiques. Tu parviens à t’infiltrer jusqu’au cœur du sanctuaire sans être détecté. L’oscillateur est là, flottant dans une capsule d’énergie.
 
 Pix l’extrait, et vous repartez avant que les défenses ne s’activent.
@@ -183,31 +178,28 @@ Pix l’extrait, et vous repartez avant que les défenses ne s’activent.
 
 [7.21]
 
-
-A. Le piratage tourne mal
 Tu tentes d’accéder au système du drone. Une alarme retentit. Des murs d’eau se déplacent comme un raz-de-marée. Tu es capturé par les Né’Kaari.
 
 → Tu es emprisonné. Tu perds plusieurs jours avant de réussir à t’échapper, sans la pièce.
 
 
-[8]
+[8] : Une carte révélée
 
-Chapitre 8 : Une carte révélée
-Avec deux pièces essentielles en ta possession (ou non, selon tes choix), Pix détecte une signature énergétique proche : une carte mémoire ancienne, qui semble liée à la machine d’origine qui t’a projeté dans ce monde. Elle serait cachée sur un astéroïde creux, appelé Xeros Prime, un lieu interdit, ravagé par des pirates cybernétiques.
+Après avoir traversé Velmor, tu possèdes une ou deux pièces essentielles selon les choix que tu as faits plus tôt.
+
+
+Pix détecte une signature énergétique proche : une carte mémoire ancienne, qui semble liée à la machine d’origine qui t’a projeté dans ce monde. Elle serait cachée sur un astéroïde creux, appelé Xeros Prime, un lieu interdit, ravagé par des pirates cybernétiques.
+
+
+Maintenant, un nouveau choix s'impose à toi : tenter d'en finir rapidement en traquant la mystérieuse carte mémoire sur Xeros Prime, ou retourner auprès de Nara pour assembler ce que tu as déjà.
 
 Souhaites-tu :
 
 A: Mettre le cap vers Xeros Prime malgré les dangers ?
-
 B: Rejoindre Nara pour réparer ce que tu as déjà et voir si tu peux rentrer ?
 
 
-Après avoir traversé Velmor, tu possèdes une ou deux pièces essentielles selon les choix que tu as faits plus tôt. Mais maintenant, un nouveau choix s'impose à toi : tenter d'en finir rapidement en traquant la mystérieuse carte mémoire sur Xeros Prime, ou retourner auprès de Nara pour assembler ce que tu as déjà.
-
-[9.1]
-
-
-Option 1 : Mettre le cap vers Xeros Prime
+[9.1] : Mettre le cap vers Xeros Prime
 Xeros Prime est un astéroïde ancien, à moitié creux, tournant autour d’un soleil mourant. Selon Pix, une balise oubliée de l’ancienne humanité y diffuse une signature énergétique terrienne.
 
 Tu t’y rends, ton vaisseau grinçant à chaque manœuvre à travers la ceinture d’astéroïdes.
@@ -218,10 +210,8 @@ Choisis :
 A: Tenter de te faire passer pour un marchand d’antiquités.
 B: Lancer une évasion avec Pix en piratant le hangar.
 
-[9.11]
+[9.11] : Marchand d'antiquités
 
-
-A. Marchand d'antiquités
 Tu joues la comédie : tu proposes de leur vendre des « reliques humaines ». Intrigué, Varkoss t’accorde un répit. Pendant ce temps, Pix infiltre leur réseau. Vous découvrez la cache contenant la carte mémoire — un cube transparent contenant des coordonnées, un code d’accès et une image : ta propre planète Terre.
 
 Vous fuyez en urgence. Nara te contacte immédiatement :
@@ -230,23 +220,19 @@ Vous fuyez en urgence. Nara te contacte immédiatement :
 
 → Tu as la carte mémoire. Il ne te manque plus qu’une seule pièce, que tu penses pouvoir construire à partir de matériaux locaux sur la planète d’origine.
 
-[9.12]
+[9.12] : Tentative d’évasion
 
-
-B. Tentative d’évasion
 Tu essaies de fuir, Pix piratant les systèmes du hangar. Mais les défenses automatiques te repèrent. Une explosion frappe ton vaisseau. Tu es fait prisonnier et interrogé. La carte mémoire est détruite dans l’émeute.
 
 → Tu réussis à t’échapper de Xeros Prime avec l’aide inattendue d’un prisonnier alien, mais sans la carte. Ton chemin du retour sera plus difficile.
 
-[9.2]
+[9.2] : Rejoindre Nara et commencer les réparations
 
-
-Option 2 : Rejoindre Nara et commencer les réparations
 Tu fais demi-tour et retrouves Nara dans une station orbitale cachée, au bord du système solaire Zenthari. Elle t’accueille avec un sourire fatigué.
 
 — « Tu as survécu… et tu as rapporté des pièces, c’est un miracle. »
 
-Avec les éléments que tu as réunis (le noyau, l’oscillateur, peut-être la carte), elle commence les réparations.
+Avec les éléments que tu as réunis, elle commence les réparations.
 
 Mais l’énergie nécessaire pour activer la machine dépasse tout ce que vous avez. Il faut une source d’énergie rare : un fragment de cœur d’étoile, conservé dans un temple énergétique sur une planète mourante.
 
@@ -254,36 +240,28 @@ Choisis :
 A: Tenter de synthétiser une fausse source avec les outils de Nara (risque élevé).
 B: Accepter de repartir en mission pour obtenir le cœur d’étoile.
 
-[9.22]
+[9.22] : La dernière quête
 
 
-B. La dernière quête
 Tu acceptes, bien que fatigué. Tu te rends sur Oran-Dar, une planète sur le point de s’effondrer dans sa propre étoile. Là, dans un ancien temple lévitant au-dessus du magma, tu affrontes une intelligence ancienne, le Gardien Solaire, qui teste ta volonté.
 
 Tu lui prouves ta détermination à rentrer chez toi non par la force, mais en sacrifiant l’arme que tu as ramassée sur Skarh’th. En retour, il t’offre une étincelle de cœur stellaire.
 
 → Tu obtiens la dernière pièce. La machine est enfin complète.
 
-[9.21]
+[9.21] : Tentative de synthèse
 
 
-A. Tentative de synthèse
 Nara et toi tentez de reproduire artificiellement la source d’énergie. La machine s’active brièvement… puis implose. Le laboratoire est détruit, et une faille gravitationnelle aspire une partie de la station.
 
-→ Tu survis de justesse, mais la machine est irréparable. Tu es bloqué. Tu devras refaire toute la quête pour trouver un autre moyen de rentrer.
+→ Tu survis de justesse, mais la machine est irréparable. Tu es bloqué et tu dois trouver un autre moyen de rentrer.
 
-Chapitre Final : Retour ou destinée nouvelle
-Si tu as réussi à rassembler le noyau, l’oscillateur, la carte mémoire et l’énergie du cœur d’étoile, alors la machine se met en marche. Les anneaux tournent, le vide s’ouvre, et un portail vers la Terre apparaît.
+[10] : Chapitre Final : Retour ou destinée nouvelle
+
+
+Tu as réussi à rassembler le noyau, l’oscillateur, la carte mémoire et l’énergie du cœur d’étoile, alors la machine se met en marche. Les anneaux tournent, le vide s’ouvre, et un portail vers la Terre apparaît.
 
 Tu te tiens devant, regardant Nara et Pix.
-
-Choisis :
-
-A:Rentrer sur Terre, abandonnant ce nouveau monde.
-
-B:Rester et aider à bâtir un pont entre les mondes.
-
-[10]
 
 La machine est enfin prête. Les anneaux s’activent, vrombissant à travers l’espace comme un chœur de cloches stellaires. La lumière se condense en un vortex noir et bleu. Une silhouette floue de la Terre apparaît dans le cœur du portail. C’est chez toi.
 
@@ -291,7 +269,13 @@ Nara, les bras croisés, t’observe sans rien dire. Pix vole en cercle, inquiet
 
 Tu sens le poids de ta décision : retourner chez toi, ou rester ici, là où tu t’es forgé en héros, pour un monde que tu ne connaissais pas mais où tu as trouvé ta place.
 
-[10.1]
+Choisis :
+
+A:Rentrer sur Terre, abandonnant ce nouveau monde.
+B:Rester et aider à bâtir un pont entre les mondes.
+
+
+[101]
 
 Tu te tournes vers Nara.
 
@@ -312,7 +296,7 @@ Tu es de retour dans la vieille grange.
 Mais quelque chose a changé : toi. Tes yeux ont vu d’autres soleils. Tu n’es plus le même. Tu garderas cette aventure dans ton cœur… et le traducteur, toujours dans ton oreille, grésille doucement, comme s’il attendait encore un autre signal.
 
 Tu es revenu, mais ton esprit ne quittera jamais les étoiles.
-[10.2]
+[102]
 
 Tu regardes la Terre, puis le visage de Nara. Tu inspires profondément.
 
@@ -327,5 +311,13 @@ Un humain perdu, devenu lien vivant entre espèces, civilisations, et galaxies.
 Un jour, peut-être, tu réactiveras la machine. Mais ce jour-là, tu ne reviendras pas seul.
 
 Tu n’es plus juste un explorateur. Tu es un bâtisseur de paix, dans un univers plus vaste que tu ne l’aurais jamais imaginé.
+[103]
+
+Tu regardes avec frayeur autour de toi. Tu comprend que rien ne pourra te ramenner sur Terre maintenant.
+
+Nara t’aide à te relever et te jeter un regard empathique.
+
+Un jour, peut-être, tu trouvera la force de te reconstruire dans ce nouveau monde.
+
   ''';
 }

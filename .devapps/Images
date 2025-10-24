@@ -10,5 +10,14 @@ VargAttaque      : Etape == 5.12
 VieuxPortSpatial : Etape == 5.2
 CaisseCribleur   : Etape == 5.21
 Entrepot         : Etape == 5.22
-Fin1             : Etape == 10.1
-Fin2             : Etape == 10.2
+PlaneteVelmor    : Etape == 7
+LeDome           : Etape == 7.1
+Oscillateur      : Etape == 7.11
+Xeros            : Etape == 8
+XerosPrime       : Etape == 9.1
+Zenthari         : Etape == 9.2
+EchapeeXerosPrime: Etape == 9.12
+Explosion        : Etape == 9.21
+Fin1             : Etape == 101
+Fin2             : Etape == 102
+Fin3             : Etape == 103

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:levoyageur/game_data_manager.dart';
 import 'histoire.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:page_transition/page_transition.dart';
@@ -122,7 +123,10 @@ class AccueilState extends State<Accueil> {
                   shadowColor: const Color.fromARGB(255, 80, 64, 13),
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 ),
-                child: Text("Démarrer", style: TextStyle(fontSize: 24)),
+                child: Text(
+                  GameDataManager().Etape == 1 ? "Démarrer" : "Continuer",
+                  style: TextStyle(fontSize: 24),
+                ),
               ),
             ),
           ),

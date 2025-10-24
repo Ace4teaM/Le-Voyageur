@@ -32,17 +32,17 @@ class Grafcet {
   int get PV => GameDataManager().Health;
   set PV(int value) => GameDataManager().Health = value;
 
-  bool get Lampe => GameDataManager().inventory.contains("ObjetLampe");
-  set Lampe(bool value) => value ? GameDataManager().addItem("ObjetLampe") : GameDataManager().removeItem("ObjetLampe");
+  bool get ObjetLampe => GameDataManager().inventory.contains("ObjetLampe");
+  set ObjetLampe(bool value) => value ? GameDataManager().addItem("ObjetLampe") : GameDataManager().removeItem("ObjetLampe");
 
-  bool get Oscillateur => GameDataManager().inventory.contains("ObjetOscillateur");
-  set Oscillateur(bool value) => value ? GameDataManager().addItem("ObjetOscillateur") : GameDataManager().removeItem("ObjetOscillateur");
+  bool get ObjetOscillateur => GameDataManager().inventory.contains("ObjetOscillateur");
+  set ObjetOscillateur(bool value) => value ? GameDataManager().addItem("ObjetOscillateur") : GameDataManager().removeItem("ObjetOscillateur");
 
-  bool get NoyauEnergetique => GameDataManager().inventory.contains("ObjetNoyauEnergetique");
-  set NoyauEnergetique(bool value) => value ? GameDataManager().addItem("ObjetNoyauEnergetique") : GameDataManager().removeItem("ObjetNoyauEnergetique");
+  bool get ObjetNoyauEnergetique => GameDataManager().inventory.contains("ObjetNoyauEnergetique");
+  set ObjetNoyauEnergetique(bool value) => value ? GameDataManager().addItem("ObjetNoyauEnergetique") : GameDataManager().removeItem("ObjetNoyauEnergetique");
 
-  bool get CarteMemoire => GameDataManager().inventory.contains("ObjetCarteMemoire");
-  set CarteMemoire(bool value) => value ? GameDataManager().addItem("ObjetCarteMemoire") : GameDataManager().removeItem("ObjetCarteMemoire");
+  bool get ObjetCarteMemoire => GameDataManager().inventory.contains("ObjetCarteMemoire");
+  set ObjetCarteMemoire(bool value) => value ? GameDataManager().addItem("ObjetCarteMemoire") : GameDataManager().removeItem("ObjetCarteMemoire");
 
   bool get ChoixA => GameDataManager().Choix == 1;
   bool get ChoixB => GameDataManager().Choix == 2;
@@ -58,7 +58,7 @@ class Grafcet {
 
       // Définition des transitions
       {{- for t in transitions }}
-      addTransition({{ t.source }}, {{ t.destination }}, () => {{ t.condition }}); // toujours vrai
+      addTransition({{ t.source }}, {{ t.destination }}, () => {{ t.condition }});
       {{- end }}
   }
     
