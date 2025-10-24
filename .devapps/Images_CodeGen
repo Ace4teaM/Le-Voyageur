@@ -1,9 +1,20 @@
 
 // images States
-bool get LaGrange => (Etape == 1);
-bool get Couloir => (Etape >= 2 && Etape < 3);
-bool get Fin => (Etape >= 3 && Etape < 3);
-bool get LaMachine => (Etape >= 4 && Etape < 4);
-bool get PortSpatial => (Etape >= 5 && Etape < 5);
-bool get Reveil => (Etape >= 6 && Etape < 6);
-bool get Empty => (! LaGrange && ! Couloir && ! Fin && ! LaMachine && ! PortSpatial && ! Reveil);
+String get imageSelectionne {
+   var base = "assets/images";
+   if (Etape == 1) return "$base/LaGrange.png";
+   if (Etape == 1.1) return "$base/Arrivee.png";
+   if (Etape == 2) return "$base/LeReveil.png";
+   if (Etape == 3) return "$base/Nara.png";
+   if (Etape == 3.1) return "$base/LeCribleur.png";
+   if (Etape == 4) return "$base/PlaneteVarg.png";
+   if (Etape == 5.1) return "$base/Varg.png";
+   if (Etape == 5.11) return "$base/VargLampe.png";
+   if (Etape == 5.12) return "$base/VargAttaque.png";
+   if (Etape == 5.2) return "$base/VieuxPortSpatial.png";
+   if (Etape == 5.21) return "$base/CaisseCribleur.png";
+   if (Etape == 5.22) return "$base/Entrepot.png";
+   if (Etape == 10.1) return "$base/Fin1.png";
+   if (Etape == 10.2) return "$base/Fin2.png";
+   return "assets/images/Empty.png";
+}

@@ -221,14 +221,14 @@
       }
     },
     {
-      "Key": "ChapitreFinal",
+      "Key": "Chapitre10",
       "Value": {
         "BaseGuid": null,
         "Guid": null,
         "Tags": [
           "#text"
         ],
-        "Description": "Chapitre Final : Le Dernier Choix",
+        "Description": "Chapitre 10 : Le Dernier Choix",
         "InitialDataBase64": "",
         "Editor": "text",
         "Pointers": [],
@@ -540,7 +540,7 @@
           {
             "Key": "chapitreFinal",
             "Value": {
-              "target": "ChapitreFinal",
+              "target": "Chapitre10",
               "tags": []
             }
           },
@@ -571,7 +571,7 @@
         "UserAction": "",
         "LoopMethod": "",
         "InitMethod": "",
-        "BuildMethod": "#construit le code générique des instances du grafcet\r\nimport ast\r\nimport clr\r\nclr.AddReference(\"System\")\r\nfrom System import Decimal\r\nfrom System.Globalization import CultureInfo\r\nfrom Scriban import Template\r\ntpl = template.text()\r\n#\r\n# Initialisation des dictionnaires\r\n#\r\ndata = { \r\n'chapitre1' : chapitre1.text(),\r\n'chapitre2' : chapitre3.text(),\r\n'chapitre3' : chapitre3.text(),\r\n'chapitre4' : chapitre4.text(),\r\n'chapitre5' : chapitre5.text(),\r\n'chapitre6' : chapitre6.text(),\r\n'chapitre7' : chapitre7.text(),\r\n'chapitre8' : chapitre8.text(),\r\n'chapitre9' : chapitre9.text(),\r\n'chapitreFinal' : chapitreFinal.text(),\r\n'Fin1' : Fin1.text(),\r\n'Fin2' : Fin2.text(),\r\n}\r\n# construit le code\r\nresult = Template.Parse(tpl).Render(data)\r\nout.write(result)",
+        "BuildMethod": "#construit le code générique des instances du grafcet\r\nimport ast\r\nimport clr\r\nclr.AddReference(\"System\")\r\nfrom System import Decimal\r\nfrom System.Globalization import CultureInfo\r\nfrom Scriban import Template\r\ntpl = template.text()\r\n#\r\n# Initialisation des dictionnaires\r\n#\r\ncontent = []\r\ncontent.append(chapitre1.text())\r\ncontent.append(chapitre2.text())\r\ncontent.append(chapitre3.text())\r\ncontent.append(chapitre4.text())\r\ncontent.append(chapitre5.text())\r\ncontent.append(chapitre6.text())\r\ncontent.append(chapitre7.text())\r\ncontent.append(chapitre8.text())\r\ncontent.append(chapitre9.text())\r\ncontent.append(chapitreFinal.text())\r\ncontent.append(Fin1.text())\r\ncontent.append(Fin2.text())\r\ndata = { \r\n'text' : '\\n'.join(content),\r\n}\r\n# construit le code\r\nresult = Template.Parse(tpl).Render(data)\r\nout.write(result)",
         "ObjectCode": "",
         "DrawCode": "import clr\r\nclr.AddReference('PresentationCore')\r\nclr.AddReference('WindowsBase')\r\nfrom System.Windows import Point, Rect, Size, FontStyles, FontWeights, FontStretches, TextTrimming\r\nfrom System.Windows.Media import Brushes, Typeface, FormattedText, Pen\r\nfrom System.Windows.Media import FontFamily\r\nfrom System.Windows import FlowDirection\r\nfrom System.Globalization import CultureInfo\r\ndef dessiner_rectangle_contenu(drawingContext):\r\n    # Dessiner le rectangle avec fond et contour\r\n    drawingContext.DrawRectangle(Brushes.LightGray, \r\n                                 Pen(Brushes.Black, 1), \r\n                                 rect)\r\n    # Définir les textes : titre et description\r\n    titre = \"Titre du rectangle\"\r\n    description = \"Ceci est une description\\nmultiligne du contenu.\"\r\n    # Définir la police et le style de texte\r\n    typeface = Typeface(FontFamily(\"Segoe UI\"), \r\n                        FontStyles.Normal,\r\n                        FontWeights.Bold, \r\n                        FontStretches.Normal)\r\n    # Texte du titre\r\n    formattedTitre = FormattedText(desc,\r\n                                   CultureInfo.CurrentCulture,\r\n                                   FlowDirection.LeftToRight,\r\n                                   typeface,\r\n                                   14,  # Taille du texte\r\n                                   Brushes.Black,\r\n                                   1.0)  # PixelsPerDip\r\n    # Texte de la description\r\n    typefaceDesc = Typeface(FontFamily(\"Segoe UI\"), \r\n                            FontStyles.Normal,\r\n                            FontWeights.Normal, \r\n                            FontStretches.Normal)\r\n    formattedDescription = FormattedText(out.text(),\r\n                                         CultureInfo.CurrentCulture,\r\n                                         FlowDirection.LeftToRight,\r\n                                         typefaceDesc,\r\n                                         12,\r\n                                         Brushes.Black,\r\n                                         1.0)\r\n    formattedDescription.MaxTextWidth = rect.Width - 20\r\n    # Positionner le texte dans le rectangle\r\n    drawingContext.DrawText(formattedTitre, Point(rect.X + 10, rect.Y + 10))\r\n    drawingContext.DrawText(formattedDescription, Point(rect.X + 10, rect.Y + 35))\r\ndessiner_rectangle_contenu(dc)"
       }
@@ -672,7 +672,7 @@
         "UserAction": "",
         "LoopMethod": "",
         "InitMethod": "",
-        "BuildMethod": "#construit le code générique des instances du grafcet\r\nimport ast\r\nimport clr\r\nclr.AddReference(\"System\")\r\nfrom System import Decimal\r\nfrom System.Globalization import CultureInfo\r\nfrom Scriban import Template\r\ncontenu = objs.text()\r\ntpl = \"\"\"\r\n// images States\r\n{{- for i in objects}}\r\nbool get {{i.name}} => ({{i.value}});\r\n{{- end}}\r\n\"\"\"\r\n#\r\n# Initialisation des dictionnaires\r\n#\r\ndata = { 'objects' : [] }\r\n# Traitement ligne par ligne\r\nfor ligne in contenu.strip().splitlines():\r\n    parts = ligne.strip().split(\":\", 2)\r\n    data['objects'].append({'name':parts[0].strip(),'value':parts[1].strip().replace('And','&&').replace('Or','||').replace('Not','!')})\r\n# construit le code\r\nresult = Template.Parse(tpl).Render(data)\r\nout.write(result)",
+        "BuildMethod": "#construit le code générique des instances du grafcet\r\nimport ast\r\nimport clr\r\nclr.AddReference(\"System\")\r\nfrom System import Decimal\r\nfrom System.Globalization import CultureInfo\r\nfrom Scriban import Template\r\ncontenu = objs.text()\r\ntpl = \"\"\"\r\n// images States\r\nString get imageSelectionne {\r\n   var basePath = \"assets/images\";\r\n{{- for i in objects}}\r\n   if ({{i.value}}) return \"$basePath/{{i.name}}.png\";\r\n{{- end}}\r\n   return \"$basePath/Empty.png\";\r\n}\r\n\"\"\"\r\n#\r\n# Initialisation des dictionnaires\r\n#\r\ndata = { 'objects' : [] }\r\n# Traitement ligne par ligne\r\nfor ligne in contenu.strip().splitlines():\r\n    parts = ligne.strip().split(\":\", 2)\r\n    data['objects'].append({'name':parts[0].strip(),'value':parts[1].strip().replace('And','&&').replace('Or','||').replace('Not','!')})\r\n# construit le code\r\nresult = Template.Parse(tpl).Render(data)\r\nout.write(result)",
         "ObjectCode": "",
         "DrawCode": "import clr\r\nclr.AddReference('PresentationCore')\r\nclr.AddReference('WindowsBase')\r\nfrom System.Windows import Point, Rect, Size, FontStyles, FontWeights, FontStretches, TextTrimming\r\nfrom System.Windows.Media import Brushes, Typeface, FormattedText, Pen\r\nfrom System.Windows.Media import FontFamily\r\nfrom System.Windows import FlowDirection\r\nfrom System.Globalization import CultureInfo\r\ndef dessiner_rectangle_contenu(drawingContext):\r\n    # Dessiner le rectangle avec fond et contour\r\n    drawingContext.DrawRectangle(Brushes.LightGray, \r\n                                 Pen(Brushes.Black, 1), \r\n                                 rect)\r\n    # Définir les textes : titre et description\r\n    titre = \"Titre du rectangle\"\r\n    description = \"Ceci est une description\\nmultiligne du contenu.\"\r\n    # Définir la police et le style de texte\r\n    typeface = Typeface(FontFamily(\"Segoe UI\"), \r\n                        FontStyles.Normal,\r\n                        FontWeights.Bold, \r\n                        FontStretches.Normal)\r\n    # Texte du titre\r\n    formattedTitre = FormattedText(desc,\r\n                                   CultureInfo.CurrentCulture,\r\n                                   FlowDirection.LeftToRight,\r\n                                   typeface,\r\n                                   14,  # Taille du texte\r\n                                   Brushes.Black,\r\n                                   1.0)  # PixelsPerDip\r\n    # Texte de la description\r\n    typefaceDesc = Typeface(FontFamily(\"Segoe UI\"), \r\n                            FontStyles.Normal,\r\n                            FontWeights.Normal, \r\n                            FontStretches.Normal)\r\n    formattedDescription = FormattedText(out.text(),\r\n                                         CultureInfo.CurrentCulture,\r\n                                         FlowDirection.LeftToRight,\r\n                                         typefaceDesc,\r\n                                         12,\r\n                                         Brushes.Black,\r\n                                         1.0)\r\n    formattedDescription.MaxTextWidth = rect.Width - 20\r\n    # Positionner le texte dans le rectangle\r\n    drawingContext.DrawText(formattedTitre, Point(rect.X + 10, rect.Y + 10))\r\n    drawingContext.DrawText(formattedDescription, Point(rect.X + 10, rect.Y + 35))\r\ndessiner_rectangle_contenu(dc)"
       }
@@ -686,17 +686,9 @@
         "Description": "-44.23725638522521,-83.25872141537033,866.6687158223579,613.0095794841068",
         "Objects": [
           {
-            "Key": "G7_Description",
-            "Value": {
-              "zone": "-7.777544773426399,86.27763743369314,488.0256634472654,671.8492584269962",
-              "background": null,
-              "TitlePos": "TopLeft"
-            }
-          },
-          {
             "Key": "G7_Graphic",
             "Value": {
-              "zone": "908.4819032207424,84.67361988477072,779.5558785319433,1390.5153777809505",
+              "zone": "1000.7525438169346,-22.360323206811927,1148.5215635879042,2020.7362684044863",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -704,7 +696,7 @@
           {
             "Key": "Objets",
             "Value": {
-              "zone": "-5.908021977900205,873.7435312897278,682.442586687154,118.88864287675091",
+              "zone": "24.360275528871455,430.2000806238036,682.442586687154,118.88864287675091",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -712,7 +704,7 @@
           {
             "Key": "Images",
             "Value": {
-              "zone": "-6.4821702993551185,1037.1271115130558,809.8803089709944,162.46033101202715",
+              "zone": "24.831564050372833,100.49268428224264,676.5443188886594,241.6285751234135",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -739,7 +731,7 @@
           {
             "Key": "Chapitre1",
             "Value": {
-              "zone": "-896.3546272502481,263.10862535530237,420.9102507967385,301.6530630006532",
+              "zone": "-896.3546272502481,263.10862535530237,420.9102507967385,317.7917773800288",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -747,7 +739,7 @@
           {
             "Key": "Chapitre2",
             "Value": {
-              "zone": "-375.85899866958493,261.4605977169008,472.9497509259395,297.3164379898865",
+              "zone": "-375.85899866958493,261.4605977169008,472.9497509259395,317.8566199272736",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -755,7 +747,7 @@
           {
             "Key": "Chapitre3",
             "Value": {
-              "zone": "202.10452016511067,291.58725193822625,460.8221938657583,261.5621763578023",
+              "zone": "202.10452016511067,291.58725193822625,460.8221938657583,279.1680465898484",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -771,7 +763,7 @@
           {
             "Key": "Chapitre5",
             "Value": {
-              "zone": "1403.216840511034,264.0596072523735,729.4771151400112,1042.1557748709602",
+              "zone": "1380.9307528753418,230.63047579883522,744.1303220105917,1198.1068083561986",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -787,7 +779,7 @@
           {
             "Key": "Chapitre7",
             "Value": {
-              "zone": "3062.1773289399134,255.62972898914347,749.9817228822124,1118.0538693201077",
+              "zone": "3062.1773289399134,255.62972898914347,878.1267267874421,1424.487574310875",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -801,7 +793,7 @@
             }
           },
           {
-            "Key": "ChapitreFinal",
+            "Key": "Chapitre10",
             "Value": {
               "zone": "6371.72667890883,253.88572944102873,401.5827292012309,270.98663664534064",
               "background": null,
@@ -819,7 +811,7 @@
           {
             "Key": "Chapitre9",
             "Value": {
-              "zone": "5017.284612130099,256.4937147002182,959.6619571874351,1204.451163111632",
+              "zone": "5017.284612130099,256.4937147002182,1104.521526819435,1488.5987804667072",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -901,6 +893,16 @@
             "path": "M 0,0 L 328,362 M 317,357 L 328,362 L 324,351",
             "X": 6789.794674243178,
             "Y": 451.0688644909416
+          },
+          {
+            "path": "M 0,0 L 128,492 M 120,483 L 128,492 L 130,481",
+            "X": 1263.7627025613567,
+            "Y": 492.39304390961405
+          },
+          {
+            "path": "M 0,0 L 177,-566 M 178,-554 L 177,-566 L 169,-557",
+            "X": 2132.751778318836,
+            "Y": 980.589153885726
           }
         ],
         "Texts": []
@@ -922,7 +924,7 @@
           {
             "Key": "G7_CodeGen",
             "Value": {
-              "zone": "227.57081692515726,-320.2939232695119,929.2490850710137,2455.3997420255428",
+              "zone": "227.57081692515726,-320.2939232695119,1067.2006811976164,2946.507424236248",
               "background": null,
               "TitlePos": "TopLeft"
             }
@@ -930,7 +932,7 @@
           {
             "Key": "Histoire_CodeGen",
             "Value": {
-              "zone": "1364.9973814143295,-321.33689921498933,2007.5275941553132,4119.628939473313",
+              "zone": "1364.9973814143295,-321.33689921498933,2040.6359772256978,5395.00744673054",
               "background": null,
               "TitlePos": "TopLeft"
             }

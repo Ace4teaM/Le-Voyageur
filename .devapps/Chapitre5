@@ -1,4 +1,5 @@
-Option 1 : Entrer en douce la nuit, malgré les vargs
+[5.1]
+
 Tu attends que le soleil de Skarh’th se couche derrière l’horizon de roche noire. Le vent hurle, portant des grains de sable acide qui picotent ta combinaison. Pix flotte nerveusement à côté de toi, ses capteurs s’agitant.
 
 — « Mauvaise idée... très mauvaise idée... Les vargs sortent à cette heure-là. »
@@ -13,17 +14,24 @@ Choisis :
 A: Utiliser le flash de ton traducteur pour désorienter la créature.
 B: Tenter de rester immobile et silencieux, espérant qu’il ne te détecte pas.
 
+[5.11]
+
 A. Flash lumineux
 Tu déclenches le flash de secours du traducteur : une lumière aveuglante explose dans le noir. Le varg hurle et bat en retraite, heurtant un mur. Tu profites de l’occasion pour foncer à l’intérieur de la salle de stockage. Là, après quelques minutes de fouilles, tu trouves le noyau énergétique… juste à temps pour t’enfuir avant que les autres vargs arrivent.
 
 → Tu repars victorieux, mais ton traducteur est endommagé. Il ne fonctionnera plus longtemps.
+
+[5.12]
+
 
 B. Silence mortel
 Tu ne bouges pas. Le varg s’approche lentement… il te renifle… et soudain, il attaque. Tu n’as que le temps de crier avant qu’il te projette contre un mur.
 
 → Tu es gravement blessé. Pix te sauve in extremis, mais tu es incapable de continuer la mission. Tu perds cette chance.
 
-Option 2 : Négocier avec les contrebandiers
+[5.2]
+
+Négocier avec les contrebandiers
 Tu te rends à un vieux port spatial abandonné, où des contrebandiers, les Zhirkal, font commerce d’objets technologiques. Nara t’a prévenu : ils n’aident jamais sans contrepartie.
 
 Le chef Zhirkal, une créature au corps couvert de chitine bleue, te propose un marché :
@@ -36,16 +44,23 @@ Choisis :
 A: Accepter la mission de livraison sans poser de questions.
 B: Tenter de voler la pièce au Zhirkal.
 
-A. La livraison
+
+[5.21]
+
+La livraison
 Tu acceptes. Tu prends la caisse à bord du Cribleur et fais le trajet jusqu’à une station orbitale désaffectée. À l’arrivée, tu déposes la caisse sans encombre. De retour, les Zhirkal te remettent la pièce comme promis.
 
 Mais ton nom est maintenant sur une liste noire de la sécurité spatiale. Tu es fiché comme contrebandier.
 
 → Tu obtiens la pièce, mais tu devras voyager discrètement à l’avenir.
 
-B. Le vol
+
+[5.22]
+
+Le vol
 La nuit, tu t’infiltres dans leur entrepôt. Pix te guide à travers les conduits d’aération. Tu trouves la pièce… mais déclenches une alarme en la décrochant.
 
 Tu t’échappes de justesse avec le noyau, mais les Zhirkal jurent de te retrouver. Une prime est mise sur ta tête.
 
 → Tu as la pièce, mais chaque port spatial deviendra une zone de danger.
+
