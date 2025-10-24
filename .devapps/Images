@@ -1,8 +1,14 @@
-LaGrange     : Etape == 1
-Couloir      : Etape >= 2 And Etape < 3
-Fin          : Etape >= 3 And Etape < 3
-LaMachine    : Etape >= 4 And Etape < 4
-PortSpatial  : Etape >= 5 And Etape < 5
-Reveil       : Etape >= 6 And Etape < 6
-Empty        : Not LaGrange And Not Couloir And Not Fin And Not LaMachine And Not PortSpatial And Not Reveil
-
+LaGrange         : Etape == 1
+Arrivee          : Etape == 1.1
+LeReveil         : Etape == 2
+Nara             : Etape == 3
+LeCribleur       : Etape == 3.1
+PlaneteVarg      : Etape == 4
+Varg             : Etape == 5.1
+VargLampe        : Etape == 5.11
+VargAttaque      : Etape == 5.12
+VieuxPortSpatial : Etape == 5.2
+CaisseCribleur   : Etape == 5.21
+Entrepot         : Etape == 5.22
+Fin1             : Etape == 10.1
+Fin2             : Etape == 10.2

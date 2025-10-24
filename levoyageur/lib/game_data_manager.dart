@@ -52,23 +52,23 @@ class GameDataManager extends ChangeNotifier {
   }
 
   // images States
-  bool get LaGrange => (Etape == 1);
-  bool get Couloir => (Etape >= 2 && Etape < 3);
-  bool get Fin => (Etape >= 3 && Etape < 3);
-  bool get LaMachine => (Etape >= 4 && Etape < 4);
-  bool get PortSpatial => (Etape >= 5 && Etape < 5);
-  bool get Reveil => (Etape >= 6 && Etape < 6);
-  bool get Empty =>
-      (!LaGrange && !Couloir && !Fin && !LaMachine && !PortSpatial && !Reveil);
-
   String get imageSelectionne {
-    if (Couloir) return "assets/images/Couloir.png";
-    if (Fin) return "assets/images/Fin.png";
-    if (LaMachine) return "assets/images/LaMachine.png";
-    if (PortSpatial) return "assets/images/PortSpatial.png";
-    if (Reveil) return "assets/images/Reveil.png";
-    if (LaGrange) return "assets/images/LaGrange.png";
-    return "assets/images/Empty.png";
+    var basePath = "assets/images";
+    if (Etape == 1) return "$basePath/LaGrange.png";
+    if (Etape == 1.1) return "$basePath/Arrivee.png";
+    if (Etape == 2) return "$basePath/LeReveil.png";
+    if (Etape == 3) return "$basePath/Nara.png";
+    if (Etape == 3.1) return "$basePath/LeCribleur.png";
+    if (Etape == 4) return "$basePath/PlaneteVarg.png";
+    if (Etape == 5.1) return "$basePath/Varg.png";
+    if (Etape == 5.11) return "$basePath/VargLampe.png";
+    if (Etape == 5.12) return "$basePath/VargAttaque.png";
+    if (Etape == 5.2) return "$basePath/VieuxPortSpatial.png";
+    if (Etape == 5.21) return "$basePath/CaisseCribleur.png";
+    if (Etape == 5.22) return "$basePath/Entrepot.png";
+    if (Etape == 10.1) return "$basePath/Fin1.png";
+    if (Etape == 10.2) return "$basePath/Fin2.png";
+    return "$basePath/Empty.png";
   }
 
   String get stepName {
