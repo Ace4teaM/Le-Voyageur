@@ -32,26 +32,26 @@ class Grafcet {
   int get PV => GameDataManager().Health;
   set PV(int value) => GameDataManager().Health = value;
 
-  bool get Lampe => GameDataManager().inventory.contains("ObjetLampe");
-  set Lampe(bool value) => value
+  bool get ObjetLampe => GameDataManager().inventory.contains("ObjetLampe");
+  set ObjetLampe(bool value) => value
       ? GameDataManager().addItem("ObjetLampe")
       : GameDataManager().removeItem("ObjetLampe");
 
-  bool get Oscillateur =>
+  bool get ObjetOscillateur =>
       GameDataManager().inventory.contains("ObjetOscillateur");
-  set Oscillateur(bool value) => value
+  set ObjetOscillateur(bool value) => value
       ? GameDataManager().addItem("ObjetOscillateur")
       : GameDataManager().removeItem("ObjetOscillateur");
 
-  bool get NoyauEnergetique =>
+  bool get ObjetNoyauEnergetique =>
       GameDataManager().inventory.contains("ObjetNoyauEnergetique");
-  set NoyauEnergetique(bool value) => value
+  set ObjetNoyauEnergetique(bool value) => value
       ? GameDataManager().addItem("ObjetNoyauEnergetique")
       : GameDataManager().removeItem("ObjetNoyauEnergetique");
 
-  bool get CarteMemoire =>
+  bool get ObjetCarteMemoire =>
       GameDataManager().inventory.contains("ObjetCarteMemoire");
-  set CarteMemoire(bool value) => value
+  set ObjetCarteMemoire(bool value) => value
       ? GameDataManager().addItem("ObjetCarteMemoire")
       : GameDataManager().removeItem("ObjetCarteMemoire");
 
@@ -68,12 +68,10 @@ class Grafcet {
     addStep(3, Step(name: "La quête commence"));
     addStep(3.1, Step(name: "Le Cribleur"));
     addStep(4, Step(name: "Périls et décisions"));
-    addStep(4.1, Step(name: "Entrer en douce"));
-    addStep(4.2, Step(name: "Négocier avec les contrebandiers"));
-    addStep(5.1, Step(name: "Planète Vargs"));
+    addStep(5.1, Step(name: "Entrer en douce"));
     addStep(5.11, Step(name: "Flash lumineux"));
     addStep(5.12, Step(name: "Silence mortel"));
-    addStep(5.2, Step(name: "Negociation"));
+    addStep(5.2, Step(name: "Négocier avec les contrebAndiers"));
     addStep(5.21, Step(name: "La livraison"));
     addStep(5.22, Step(name: "Le vol"));
     addStep(6, Step(name: "La poursuite continue..."));
@@ -86,56 +84,66 @@ class Grafcet {
     addStep(7.21, Step(name: "Le piratage tourne mal"));
     addStep(8, Step(name: "Une carte révélée"));
     addStep(9.1, Step(name: "Xeros Prime"));
-    addStep(9.11, Step(name: "Marchand d'antiquités"));
+    addStep(9.11, Step(name: "MarchAnd d'antiquités"));
     addStep(9.12, Step(name: "Tentative d'évasion"));
     addStep(9.2, Step(name: "Rejoindre Nara"));
     addStep(9.21, Step(name: "Tentative de synthèse"));
     addStep(9.22, Step(name: "La dernière quête"));
     addStep(10, Step(name: "Le Dernier Choix"));
-    addStep(10.1, Step(name: "FIN 1"));
-    addStep(10.2, Step(name: "FIN 2"));
+    addStep(101, Step(name: "FIN 1"));
+    addStep(102, Step(name: "FIN 2"));
+    addStep(103, Step(name: "FIN 3"));
 
     // Définition des transitions
-    addTransition(1, 1.1, () => OK); // toujours vrai
-    addTransition(1.1, 2, () => OK); // toujours vrai
-    addTransition(2, 3, () => OK); // toujours vrai
-    addTransition(3, 3.1, () => OK); // toujours vrai
-    addTransition(3.1, 4, () => OK); // toujours vrai
-    addTransition(4, 4.1, () => ChoixA); // toujours vrai
-    addTransition(4, 4.2, () => ChoixB); // toujours vrai
-    addTransition(4.1, 5.1, () => OK); // toujours vrai
-    addTransition(4.2, 5.2, () => OK); // toujours vrai
-    addTransition(5.1, 5.11, () => ChoixA); // toujours vrai
-    addTransition(5.1, 5.12, () => ChoixB); // toujours vrai
-    addTransition(5.2, 5.21, () => ChoixA); // toujours vrai
-    addTransition(5.2, 5.22, () => ChoixB); // toujours vrai
-    addTransition(5.11, 6, () => OK); // toujours vrai
-    addTransition(5.12, 6, () => OK); // toujours vrai
-    addTransition(5.21, 6, () => OK); // toujours vrai
-    addTransition(5.22, 6, () => OK); // toujours vrai
-    addTransition(6, 7, () => OK); // toujours vrai
-    addTransition(7, 7.1, () => ChoixA); // toujours vrai
-    addTransition(7, 7.2, () => ChoixB); // toujours vrai
-    addTransition(7.1, 7.11, () => ChoixA); // toujours vrai
-    addTransition(7.1, 7.12, () => ChoixB); // toujours vrai
-    addTransition(7.2, 7.21, () => ChoixA); // toujours vrai
-    addTransition(7.2, 7.22, () => ChoixB); // toujours vrai
-    addTransition(7.11, 8, () => OK); // toujours vrai
-    addTransition(7.12, 8, () => OK); // toujours vrai
-    addTransition(7.21, 8, () => OK); // toujours vrai
-    addTransition(7.22, 8, () => OK); // toujours vrai
-    addTransition(8, 9.1, () => ChoixA); // toujours vrai
-    addTransition(8, 9.2, () => ChoixB); // toujours vrai
-    addTransition(9.1, 9.11, () => ChoixA); // toujours vrai
-    addTransition(9.1, 9.12, () => ChoixB); // toujours vrai
-    addTransition(9.2, 9.21, () => ChoixA); // toujours vrai
-    addTransition(9.2, 9.22, () => ChoixB); // toujours vrai
-    addTransition(9.11, 10, () => OK); // toujours vrai
-    addTransition(9.12, 10, () => OK); // toujours vrai
-    addTransition(9.21, 10, () => OK); // toujours vrai
-    addTransition(9.22, 10, () => OK); // toujours vrai
-    addTransition(10, 10.1, () => ChoixA); // toujours vrai
-    addTransition(10, 10.2, () => ChoixB); // toujours vrai
+    addTransition(1, 1.1, () => OK);
+    addTransition(1.1, 2, () => OK);
+    addTransition(2, 3, () => OK);
+    addTransition(3, 3.1, () => OK);
+    addTransition(3.1, 4, () => OK);
+    addTransition(4, 5.1, () => ChoixA);
+    addTransition(4, 5.2, () => ChoixB);
+    addTransition(5.1, 5.11, () => ChoixA);
+    addTransition(5.1, 5.12, () => ChoixB);
+    addTransition(5.2, 5.21, () => ChoixA);
+    addTransition(5.2, 5.22, () => ChoixB);
+    addTransition(5.11, 6, () => OK);
+    addTransition(5.12, 6, () => OK);
+    addTransition(5.21, 6, () => OK);
+    addTransition(5.22, 6, () => OK);
+    addTransition(6, 7, () => OK);
+    addTransition(7, 7.1, () => ChoixA);
+    addTransition(7, 7.2, () => ChoixB);
+    addTransition(7.1, 7.11, () => ChoixA);
+    addTransition(7.1, 7.12, () => ChoixB);
+    addTransition(7.2, 7.21, () => ChoixA);
+    addTransition(7.2, 7.22, () => ChoixB);
+    addTransition(7.11, 8, () => OK);
+    addTransition(7.12, 8, () => OK);
+    addTransition(7.21, 8, () => OK);
+    addTransition(7.22, 8, () => OK);
+    addTransition(8, 9.1, () => ChoixA);
+    addTransition(8, 9.2, () => ChoixB);
+    addTransition(9.1, 9.11, () => ChoixA);
+    addTransition(9.1, 9.12, () => ChoixB);
+    addTransition(9.2, 9.21, () => ChoixA);
+    addTransition(9.2, 9.22, () => ChoixB);
+    addTransition(9.11, 10, () => OK);
+    addTransition(9.12, 10, () => OK);
+    addTransition(9.21, 103, () => OK);
+    addTransition(9.22, 10, () => OK);
+    addTransition(
+      10,
+      101,
+      () =>
+          OK && ObjetOscillateur && ObjetCarteMemoire && ObjetNoyauEnergetique,
+    );
+    addTransition(
+      10,
+      102,
+      () =>
+          OK &&
+          (!ObjetOscillateur || !ObjetCarteMemoire || !ObjetNoyauEnergetique),
+    );
   }
 
   // Obtient une étape

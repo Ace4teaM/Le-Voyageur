@@ -1,20 +1,29 @@
 
 // images States
 String get imageSelectionne {
-   var base = "assets/images";
-   if (Etape == 1) return "$base/LaGrange.png";
-   if (Etape == 1.1) return "$base/Arrivee.png";
-   if (Etape == 2) return "$base/LeReveil.png";
-   if (Etape == 3) return "$base/Nara.png";
-   if (Etape == 3.1) return "$base/LeCribleur.png";
-   if (Etape == 4) return "$base/PlaneteVarg.png";
-   if (Etape == 5.1) return "$base/Varg.png";
-   if (Etape == 5.11) return "$base/VargLampe.png";
-   if (Etape == 5.12) return "$base/VargAttaque.png";
-   if (Etape == 5.2) return "$base/VieuxPortSpatial.png";
-   if (Etape == 5.21) return "$base/CaisseCribleur.png";
-   if (Etape == 5.22) return "$base/Entrepot.png";
-   if (Etape == 10.1) return "$base/Fin1.png";
-   if (Etape == 10.2) return "$base/Fin2.png";
-   return "assets/images/Empty.png";
+   var basePath = "assets/images";
+   if (Etape == 1) return "$basePath/LaGrange.png";
+   if (Etape == 1.1) return "$basePath/Arrivee.png";
+   if (Etape == 2) return "$basePath/LeReveil.png";
+   if (Etape == 3) return "$basePath/Nara.png";
+   if (Etape == 3.1) return "$basePath/LeCribleur.png";
+   if (Etape == 4) return "$basePath/PlaneteVarg.png";
+   if (Etape == 5.1) return "$basePath/Varg.png";
+   if (Etape == 5.11) return "$basePath/VargLampe.png";
+   if (Etape == 5.12) return "$basePath/VargAttaque.png";
+   if (Etape == 5.2) return "$basePath/VieuxPortSpatial.png";
+   if (Etape == 5.21) return "$basePath/CaisseCribleur.png";
+   if (Etape == 5.22) return "$basePath/Entrepot.png";
+   if (Etape == 7) return "$basePath/PlaneteVelmor.png";
+   if (Etape == 7.1) return "$basePath/LeDome.png";
+   if (Etape == 7.11) return "$basePath/Oscillateur.png";
+   if (Etape == 8) return "$basePath/Xeros.png";
+   if (Etape == 9.1) return "$basePath/XerosPrime.png";
+   if (Etape == 9.2) return "$basePath/Zenthari.png";
+   if (Etape == 9.12) return "$basePath/EchapeeXerosPrime.png";
+   if (Etape == 9.21) return "$basePath/Explosion.png";
+   if (Etape == 101) return "$basePath/Fin1.png";
+   if (Etape == 102) return "$basePath/Fin2.png";
+   if (Etape == 103) return "$basePath/Fin3.png";
+   return "$basePath/Empty.png";
 }
