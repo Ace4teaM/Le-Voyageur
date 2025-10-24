@@ -94,7 +94,7 @@ class HistoireState extends State<Histoire> {
             ),
           ),
 
-        // Zone de texte de l'histoire
+        // Zone de choix
         Consumer<GameDataManager>(
           builder: (context, game, _) {
             return (!game.asEnd)
