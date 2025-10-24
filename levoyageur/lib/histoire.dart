@@ -34,7 +34,7 @@ class HistoireState extends State<Histoire> {
             ),
           ),
 
-        if (!GameDataManager().imageSelectionne.isEmpty)
+        if (GameDataManager().imageSelectionne.isNotEmpty)
           SizedBox.expand(
             child: Image.asset(
               'assets/images/Background.png',
