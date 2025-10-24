@@ -7,6 +7,7 @@ import 'package:levoyageur/game_data_manager.dart';
 import 'package:levoyageur/game_data_grafcet.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:animate_do/animate_do.dart';
 
 class Histoire extends StatefulWidget {
   const Histoire({super.key});
@@ -189,10 +190,11 @@ class _ZoneDeChoixState extends State<ZoneDeChoix> {
                   debugPrint(
                     "...la condition est remplie ${t.from} > ${t.to}}.",
                   );
-                } else
+                } else {
                   debugPrint(
                     "...la condition n'est pas remplie à l'étape ${t.from} > ${t.to}} !",
                   );
+                }
               }
             },
             child: Center(
@@ -223,132 +225,112 @@ class _ZoneDeChoixState extends State<ZoneDeChoix> {
             ),
           );
         } else {
-          return Stack(
-            children: [
-              // Choix
-              Align(
-                alignment: Alignment.centerRight,
-                child: Transform.translate(
-                  offset: Offset(
-                    100 + -choixProgressA * 100.0,
-                    -230.0,
-                  ), // Croît avec la progression
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: Colors.transparent,
-                    ),
-                    child: Center(
-                      child: Text(
-                        "A",
-                        style: TextStyle(
-                          decorationThickness: 0,
-                          color: Colors.white,
-                          fontSize: 60,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Transform.translate(
-                  offset: Offset(
-                    -100 + choixProgressB * 100.0,
-                    -230.0,
-                  ), // Croît avec la progression
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: Colors.transparent,
-                    ),
-                    child: Center(
-                      child: Text(
-                        "B",
-                        style: TextStyle(
-                          decorationThickness: 0,
-                          color: Colors.white,
-                          fontSize: 60,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Center(
-                child: RadialStretchDetector(
-                  onFullStretch: () {
-                    // déclenche l'execution du grafcet
-                    if (choixProgressA > 0) {
-                      game.Choix = 1;
-                      debugPrint("Choix A");
-                    } else {
-                      game.Choix = 2;
-                      debugPrint("Choix B");
-                    }
-
-                    for (var t in Grafcet().getTransitions(game.Etape)) {
-                      if (t.condition()) {
-                        game.Etape = t.to;
-                        debugPrint(
-                          "...la condition est remplie ${t.from} > ${t.to}}.",
-                        );
-                      } else
-                        debugPrint(
-                          "...la condition n'est pas remplie ${t.from} > ${t.to}} !",
-                        );
-                    }
-
-                    // reinit l'etat du bouton radial
-                    setState(() => choixProgressA = 0);
-                    setState(() => choixProgressB = 0);
-                  },
-                  onReleased: () {
-                    debugPrint("ACTION Annulé !");
-                    setState(() => choixProgressA = 0);
-                    setState(() => choixProgressB = 0);
-                  },
-                  onDragProgress: (double progress, double direction) {
-                    if (isInRightHalf(direction)) {
-                      setState(() => choixProgressB = progress);
-                      setState(() => choixProgressA = 0);
-                    } else {
-                      setState(() => choixProgressA = progress);
-                      setState(() => choixProgressB = 0);
-                    }
-                  },
+          return GestureDetector(
+            onTap: () {
+              debugPrint("Glissez pour faire un choix");
+            },
+            onDoubleTap: () {
+              debugPrint("Glissez pour faire un choix");
+            },
+            child: Stack(
+              children: [
+                // Choix
+                Align(
+                  alignment: Alignment.topCenter,
                   child: Transform.translate(
-                    offset: Offset(0, -40), // Croît avec la progression
-                    child: Container(
-                      width: 200,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.transparent,
-                        border: Border.all(
-                          color: Colors.black, // Couleur de bordure
-                          width: 6, // Épaisseur de bordure
+                    offset: Offset(0, 100.0), // Croît avec la progression
+                    child: Text(
+                      choixProgressA > 0.10
+                          ? "A"
+                          : choixProgressB > 0.10
+                          ? "B"
+                          : "",
+                      style: TextStyle(
+                        decorationThickness: 0,
+                        color: Colors.white.withAlpha(
+                          (255.0 * max(choixProgressA, choixProgressB)).toInt(),
                         ),
+                        fontSize: 60 + max(choixProgressA, choixProgressB) * 40,
                       ),
-                      child: Center(
-                        child: Text(
-                          "Choix",
-                          style: TextStyle(
-                            decorationThickness: 0,
-                            color: Colors.white,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: RadialStretchDetector(
+                    onFullStretch: () {
+                      // déclenche l'execution du grafcet
+                      if (choixProgressA > 0) {
+                        game.Choix = 1;
+                        debugPrint("Choix A");
+                      } else {
+                        game.Choix = 2;
+                        debugPrint("Choix B");
+                      }
+
+                      for (var t in Grafcet().getTransitions(game.Etape)) {
+                        if (t.condition()) {
+                          game.Etape = t.to;
+                          debugPrint(
+                            "...la condition est remplie ${t.from} > ${t.to}}.",
+                          );
+                        } else {
+                          debugPrint(
+                            "...la condition n'est pas remplie ${t.from} > ${t.to}} !",
+                          );
+                        }
+                      }
+
+                      // reinit l'etat du bouton radial
+                      setState(() => choixProgressA = 0);
+                      setState(() => choixProgressB = 0);
+                    },
+                    onReleased: () {
+                      debugPrint("ACTION Annulé !");
+                      setState(() => choixProgressA = 0);
+                      setState(() => choixProgressB = 0);
+                    },
+                    onDragProgress: (double progress, double direction) {
+                      if (isInRightHalf(direction)) {
+                        setState(() => choixProgressB = progress);
+                        setState(() => choixProgressA = 0);
+                      } else {
+                        setState(() => choixProgressA = progress);
+                        setState(() => choixProgressB = 0);
+                      }
+                    },
+                    child: Transform.translate(
+                      offset: Offset(0, -40), // Croît avec la progression
+                      child: Container(
+                        width: 200,
+                        height: 200,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withAlpha(64),
+                          border: Border.all(
+                            color: Color.fromARGB(
+                              255,
+                              50,
+                              50,
+                              50,
+                            ), // Couleur de bordure
+                            width: 6, // Épaisseur de bordure
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Choix",
+                            style: TextStyle(
+                              decorationThickness: 0,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         }
       },
