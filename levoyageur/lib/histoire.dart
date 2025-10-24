@@ -20,6 +20,8 @@ class HistoireState extends State<Histoire> {
   String choixA = 'ICI le texte du choix A';
   String choixB = 'ICI le texte du choix B';
 
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -42,37 +44,46 @@ class HistoireState extends State<Histoire> {
 
         // Zone de texte de l'histoire
         Consumer<GameDataManager>(
-          builder: (context, game, _) => Positioned(
-            bottom: 0,
-            left: 0,
-            width: MediaQuery.of(context).size.width,
-            height: 260,
-            child: Stack(
-              children: [
-                Image.asset('assets/images/ZoneTexte.png', fit: BoxFit.fill),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 40,
-                    vertical: 30,
-                  ),
-                  alignment: Alignment
-                      .center, // Centre verticalement + horizontalement
-                  child: SingleChildScrollView(
-                    child: Text(
-                      game.getTexteHistoire(),
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: Color.fromARGB(255, 99, 64, 0),
-                        decorationThickness: 0,
-                        fontFamily: "Serif",
+          builder: (context, game, _) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _scrollController.jumpTo(
+                0,
+              ); // ou animateTo() pour un effet fluide
+            });
+
+            return Positioned(
+              bottom: 0,
+              left: 0,
+              width: MediaQuery.of(context).size.width,
+              height: 260,
+              child: Stack(
+                children: [
+                  Image.asset('assets/images/ZoneTexte.png', fit: BoxFit.fill),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 40,
+                      vertical: 30,
+                    ),
+                    alignment: Alignment
+                        .center, // Centre verticalement + horizontalement
+                    child: SingleChildScrollView(
+                      controller: _scrollController,
+                      child: Text(
+                        game.getTexteHistoire(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Color.fromARGB(255, 99, 64, 0),
+                          decorationThickness: 0,
+                          fontFamily: "Serif",
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
+                ],
+              ),
+            );
+          },
         ),
 
         // Debug
