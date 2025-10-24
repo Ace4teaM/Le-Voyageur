@@ -205,9 +205,14 @@ class _ZoneDeChoixState extends State<ZoneDeChoix> {
                   height: 200,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.transparent,
+                    color: Colors.white.withAlpha(64),
                     border: Border.all(
-                      color: Colors.black, // Couleur de bordure
+                      color: Color.fromARGB(
+                        255,
+                        50,
+                        50,
+                        50,
+                      ), // Couleur de bordure
                       width: 6, // Épaisseur de bordure
                     ),
                   ),
