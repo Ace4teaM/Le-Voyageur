@@ -27,17 +27,32 @@ class HistoireState extends State<Histoire> {
     return Stack(
       children: [
         // Image de fond
-        SizedBox.expand(
-          child: Image.asset('assets/images/Background.png', fit: BoxFit.cover),
-        ),
+        if (GameDataManager().imageSelectionne.isEmpty)
+          SizedBox.expand(
+            child: Container(
+              color: Color.fromARGB(255, 50, 50, 50), // Couleur de
+            ),
+          ),
+
+        if (!GameDataManager().imageSelectionne.isEmpty)
+          SizedBox.expand(
+            child: Image.asset(
+              'assets/images/Background.png',
+              fit: BoxFit.cover,
+            ),
+          ),
 
         // Image de l'histoire
         Consumer<GameDataManager>(
-          builder: (context, game, _) => Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              margin: const EdgeInsets.only(top: 0),
-              child: Image.asset(game.imageSelectionne, fit: BoxFit.fitWidth),
+          builder: (context, game, _) => FadeIn(
+            key: ValueKey(game.imageSelectionne),
+            duration: const Duration(milliseconds: 3000),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                margin: const EdgeInsets.only(top: 0),
+                child: Image.asset(game.imageSelectionne, fit: BoxFit.fitWidth),
+              ),
             ),
           ),
         ),
