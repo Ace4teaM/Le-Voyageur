@@ -1,5 +1,4 @@
 
-// images States
 String get imageSelectionne {
    var basePath = "assets/images";
    if (Etape == 1) return "$basePath/LaGrange.png";

@@ -1,4 +1,4 @@
-[5.1]
+## [5.1] : Option 1 : Chapitre 5 : La Base de Skarh’th
 
 Tu attends que le soleil de Skarh’th se couche derrière l’horizon de roche noire. Le vent hurle, portant des grains de sable acide qui picotent ta combinaison. Pix flotte nerveusement à côté de toi, ses capteurs s’agitant.
 
@@ -14,7 +14,7 @@ Choisis :
 A: Utiliser le flash de ton traducteur pour désorienter la créature.
 B: Tenter de rester immobile et silencieux, espérant qu’il ne te détecte pas.
 
-[5.11]
+## [5.11] : Flash lumineux
 
 Tu déclenches le flash de ta lampe de poche : une lumière aveuglante explose dans le noir.
 
@@ -24,13 +24,13 @@ Là, après quelques minutes de fouilles, tu trouves le noyau énergétique… j
 
 → Tu repars victorieux. 
 
-[5.12]
+## [5.12] : Silence mortel
 
 Tu ne bouges pas. Le varg s’approche lentement… il te renifle… et soudain, il attaque. Tu n’as que le temps de crier avant qu’il te projette contre un mur.
 
 → Tu es gravement blessé. Pix te sauve in extremis, mais tu es incapable de continuer la mission. Tu perds cette chance.
 
-[5.2]
+## [5.2] : Option 2 : Négocier avec les contrebandiers
 
 Tu te rends à un vieux port spatial abandonné, où des contrebandiers, les Zhirkal, font commerce d’objets technologiques. Nara t’a prévenu : ils n’aident jamais sans contrepartie.
 
@@ -45,7 +45,7 @@ A: Accepter la mission de livraison sans poser de questions.
 B: Tenter de voler la pièce au Zhirkal.
 
 
-[5.21]
+## [5.21] : La livraison
 
 Tu acceptes. Tu prends la caisse à bord du Cribleur et fais le trajet jusqu’à une station orbitale désaffectée. À l’arrivée, tu déposes la caisse sans encombre. De retour, les Zhirkal te remettent la pièce comme promis.
 
@@ -54,7 +54,7 @@ Mais ton nom est maintenant sur une liste noire de la sécurité spatiale. Tu es
 → Tu obtiens la pièce, mais tu devras voyager discrètement à l’avenir.
 
 
-[5.22]
+## [5.22] : Le vol
 
 La nuit, tu t’infiltres dans leur entrepôt. Pix te guide à travers les conduits d’aération. Tu trouves la pièce… mais déclenches une alarme en la décrochant.
 

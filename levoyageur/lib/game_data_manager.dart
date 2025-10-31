@@ -13,13 +13,13 @@ class GameDataManager extends ChangeNotifier {
     reset();
 
     // Pour debuguage
-    /*if (kDebugMode) {
-      _grafcetStep = 10;
+    if (kDebugMode) {
+      _grafcetStep = 9.21;
       inventory[0] = "ObjetLampe";
       inventory[1] = "ObjetOscillateur";
-      inventory[2] = "ObjetNoyauEnergetique";
+      //inventory[2] = "ObjetNoyauEnergetique";
       inventory[3] = "ObjetCarteMemoire";
-    }*/
+    }
   }
 
   // réinit les données à zéro
@@ -74,7 +74,7 @@ class GameDataManager extends ChangeNotifier {
     debugPrint("Search: ^[${Etape % 1 == 0 ? Etape.toInt() : Etape}]");
 
     final match = RegExp(
-      "^\\[${Etape % 1 == 0 ? Etape.toInt() : Etape}\\](.*)\$",
+      "^(?:\\#+)(?:\\s+)\\[${Etape % 1 == 0 ? Etape.toInt() : Etape}\\](.*)\$",
       multiLine: true,
     ).firstMatch(StoryText.content);
 
@@ -83,7 +83,7 @@ class GameDataManager extends ChangeNotifier {
       debugPrint("Found start at: ${match.end}");
 
       final matchEnd = RegExp(
-        "^\\[\\d+(\\.\\d+)?\\](.*)\$",
+        "^(?:\\#+)(?:\\s+)\\[\\d+(\\.\\d+)?\\](.*)\$",
         multiLine: true,
       ).firstMatch(StoryText.content.substring(match.end));
 
@@ -101,33 +101,35 @@ class GameDataManager extends ChangeNotifier {
   }
 
   // images States
-  String get imageSelectionne {
-    var basePath = "assets/images";
-    if (Etape == 1) return "$basePath/LaGrange.png";
-    if (Etape == 1.1) return "$basePath/Arrivee.png";
-    if (Etape == 2) return "$basePath/LeReveil.png";
-    if (Etape == 3) return "$basePath/Nara.png";
-    if (Etape == 3.1) return "$basePath/LeCribleur.png";
-    if (Etape == 4) return "$basePath/PlaneteVarg.png";
-    if (Etape == 5.1) return "$basePath/Varg.png";
-    if (Etape == 5.11) return "$basePath/VargLampe.png";
-    if (Etape == 5.12) return "$basePath/VargAttaque.png";
-    if (Etape == 5.2) return "$basePath/VieuxPortSpatial.png";
-    if (Etape == 5.21) return "$basePath/CaisseCribleur.png";
-    if (Etape == 5.22) return "$basePath/Entrepot.png";
-    if (Etape == 7) return "$basePath/PlaneteVelmor.png";
-    if (Etape == 7.1) return "$basePath/LeDome.png";
-    if (Etape == 7.11) return "$basePath/Oscillateur.png";
-    if (Etape == 8) return "$basePath/Xeros.png";
-    if (Etape == 9.1) return "$basePath/XerosPrime.png";
-    if (Etape == 9.2) return "$basePath/Zenthari.png";
-    if (Etape == 9.12) return "$basePath/EchapeeXerosPrime.png";
-    if (Etape == 9.21) return "$basePath/Explosion.png";
-    if (Etape == 101) return "$basePath/Fin1.png";
-    if (Etape == 102) return "$basePath/Fin2.png";
-    if (Etape == 103) return "$basePath/Fin3.png";
-    return "$basePath/Empty.png";
-  }
+  
+String get imageSelectionne {
+   var basePath = "assets/images";
+   if (Etape == 1) return "$basePath/LaGrange.png";
+   if (Etape == 1.1) return "$basePath/Arrivee.png";
+   if (Etape == 2) return "$basePath/LeReveil.png";
+   if (Etape == 3) return "$basePath/Nara.png";
+   if (Etape == 3.1) return "$basePath/LeCribleur.png";
+   if (Etape == 4) return "$basePath/PlaneteVarg.png";
+   if (Etape == 5.1) return "$basePath/Varg.png";
+   if (Etape == 5.11) return "$basePath/VargLampe.png";
+   if (Etape == 5.12) return "$basePath/VargAttaque.png";
+   if (Etape == 5.2) return "$basePath/VieuxPortSpatial.png";
+   if (Etape == 5.21) return "$basePath/CaisseCribleur.png";
+   if (Etape == 5.22) return "$basePath/Entrepot.png";
+   if (Etape == 7) return "$basePath/PlaneteVelmor.png";
+   if (Etape == 7.1) return "$basePath/LeDome.png";
+   if (Etape == 7.11) return "$basePath/Oscillateur.png";
+   if (Etape == 8) return "$basePath/Xeros.png";
+   if (Etape == 9.1) return "$basePath/XerosPrime.png";
+   if (Etape == 9.2) return "$basePath/Zenthari.png";
+   if (Etape == 9.12) return "$basePath/EchapeeXerosPrime.png";
+   if (Etape == 9.21) return "$basePath/Explosion.png";
+   if (Etape == 101) return "$basePath/Fin1.png";
+   if (Etape == 102) return "$basePath/Fin2.png";
+   if (Etape == 103) return "$basePath/Fin3.png";
+   return "$basePath/Empty.png";
+}
+
 
   bool get asEnd {
     return Grafcet().getTransitions(_grafcetStep).isEmpty;

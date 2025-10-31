@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'accueil.dart';
 import 'package:provider/provider.dart';
 import 'package:levoyageur/game_data_manager.dart';
-import 'package:flutter/foundation.dart';
 
 void main() {
   runApp(

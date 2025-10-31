@@ -60,12 +60,12 @@ class Grafcet {
       addStep(4, Step(name:"Périls et décisions"));
       addStep(5.1, Step(name:"Entrer en douce"));
       addStep(5.11, Step(name:"Flash lumineux"));
-      addStep(5.12, Step(name:"Silence mortel"));
+      addStep(5.12, Step(name:"Silence mOrtel"));
       addStep(5.2, Step(name:"Négocier avec les contrebAndiers"));
       addStep(5.21, Step(name:"La livraison"));
       addStep(5.22, Step(name:"Le vol"));
       addStep(6, Step(name:"La poursuite continue..."));
-      addStep(7, Step(name:"Les Abysses de Velmor"));
+      addStep(7, Step(name:"Les Abysses de VelmOr"));
       addStep(7.1, Step(name:"L'Epreuve de l'Equilibre"));
       addStep(7.11, Step(name:"Lenteur et équilibre"));
       addStep(7.12, Step(name:"Vitesse et risque"));
@@ -122,7 +122,7 @@ class Grafcet {
       addTransition(9.21, 103, () => OK);
       addTransition(9.22, 10, () => OK);
       addTransition(10, 101, () => OK && ObjetOscillateur && ObjetCarteMemoire && ObjetNoyauEnergetique);
-      addTransition(10, 102, () => OK && (! ObjetOscillateur OR ! ObjetCarteMemoire OR ! ObjetNoyauEnergetique));
+      addTransition(10, 102, () => OK && (! ObjetOscillateur || ! ObjetCarteMemoire || ! ObjetNoyauEnergetique));
   }
     
   // Obtient une étape
