@@ -4,5 +4,6 @@ Map<String, String> descriptionsObjets = {
     "ObjetOscillateur": "Oscillateur de fréquence pour stabiliser les portails dimensionnels.",
     "ObjetNoyauEnergetique": "Noyau énergétique fournissant une puissance illimitée.",
     "ObjetCarteMemoire": "Carte mémoire contenant des données cruciales pour la mission.",
+    "ObjetPassport": "Paseport pour spatioport",
     "ObjetEmpty": "Emplacement vide.",
   };

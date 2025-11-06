@@ -14,6 +14,7 @@ class InventaireState extends State<Inventaire> {
   int indexSelectionne = 0;
 
   
+  
   Map<String, String> descriptionsObjets = {
     "ObjetLampe": "Lampe à lumière noir capable de révéler des objets cachés.",
     "ObjetOscillateur": "Oscillateur de fréquence pour stabiliser les portails dimensionnels.",
@@ -22,6 +23,7 @@ class InventaireState extends State<Inventaire> {
     "ObjetPassport": "Paseport pour spatioport",
     "ObjetEmpty": "Emplacement vide.",
   };
+
 
 
   @override

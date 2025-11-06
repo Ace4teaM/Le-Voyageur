@@ -4,7 +4,7 @@ import 'package:levoyageur/game_data_manager.dart';
 import 'package:provider/provider.dart';
 
 class Inventaire extends StatefulWidget {
-  const Inventaire({Key? key}) : super(key: key);
+  const Inventaire({super.key});
 
   @override
   InventaireState createState() => InventaireState();
@@ -13,16 +13,16 @@ class Inventaire extends StatefulWidget {
 class InventaireState extends State<Inventaire> {
   int indexSelectionne = 0;
 
-  
   Map<String, String> descriptionsObjets = {
     "ObjetLampe": "Lampe à lumière noir capable de révéler des objets cachés.",
-    "ObjetOscillateur": "Oscillateur de fréquence pour stabiliser les portails dimensionnels.",
-    "ObjetNoyauEnergetique": "Noyau énergétique fournissant une puissance illimitée.",
-    "ObjetCarteMemoire": "Carte mémoire contenant des données cruciales pour la mission.",
-    "ObjetPassport": "Paseport pour spatioport",
-    "ObjetEmpty": "Emplacement vide.",
+    "ObjetOscillateur":
+        "Oscillateur de fréquence pour stabiliser les portails dimensionnels.",
+    "ObjetNoyauEnergetique":
+        "Noyau énergétique fournissant une puissance illimitée.",
+    "ObjetCarteMemoire":
+        "Carte mémoire contenant des données cruciales pour la mission.",
+    "Empty": "Emplacement vide.",
   };
-
 
   @override
   Widget build(BuildContext context) {

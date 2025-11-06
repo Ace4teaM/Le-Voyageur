@@ -34,6 +34,7 @@ class Grafcet {
 
   
   
+  
   // #region Objets
   bool get ObjetLampe => GameDataManager().inventory.contains("ObjetLampe");
   set ObjetLampe(bool value) => value
@@ -63,6 +64,7 @@ class Grafcet {
 
 
 
+
   bool get ChoixA => GameDataManager().Choix == 1;
   bool get ChoixB => GameDataManager().Choix == 2;
 
@@ -72,6 +74,7 @@ class Grafcet {
     _initGrafcet();
   }
 
+  
   
   
   void _initGrafcet() {
@@ -147,6 +150,7 @@ class Grafcet {
     addTransition(10, 101, () => OK && ObjetOscillateur && ObjetCarteMemoire && ObjetNoyauEnergetique);
     addTransition(10, 102, () => OK && (! ObjetOscillateur || ! ObjetCarteMemoire || ! ObjetNoyauEnergetique));
   }
+
 
 
 
